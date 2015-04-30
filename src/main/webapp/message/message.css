@@ -1,0 +1,77 @@
+.message{
+    position: absolute;
+    margin-bottom: 30px;
+    top: 30px;
+    right: 0px;
+    padding: 10px;
+}
+
+.message-body{
+    margin-top: 5px;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px lightgray;
+    visibility: hidden;
+}
+
+.message-body-show{
+    visibility: visible;
+}
+
+.message-icon {
+    position: absolute;
+    display: block;
+    right: 8px;
+    top : 8px;
+}
+
+.message-icon:hover{
+    cursor: pointer;
+}
+
+.message-title{
+    display: block;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+.message-body-msg{
+    text-align: left;
+    font-size: 14px;
+}
+
+.message-body-control{
+    text-align: right;
+}
+
+.message-body-control button {
+    margin-left: 10px;
+}
+
+
+
+@media screen and (min-width:980px) {
+    .message{
+        width:20%
+    }
+}
+
+@media screen and (min-width:768px) and (max-width: 979px) {
+    .message{
+        width: 30%;
+    }
+}
+
+@media screen and (min-width:480px) and (max-width:767px){
+    .message{
+        width: 60%;
+    }
+}
+
+@media screen and (max-width:480px){
+    .message{
+        width: 80%;
+    }
+}

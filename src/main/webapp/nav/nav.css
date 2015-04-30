@@ -1,0 +1,148 @@
+
+.nav-menu-control {
+    display: inline-block;
+    color: gray;
+    height: 40px;
+    line-height: 40px;
+    width: 60px;
+    font-size: 20px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.nav {
+    width: 100%;
+    position: relative;
+    left: 0;
+    top:0;
+}
+
+.nav-menu > ul > li.active {
+    background-color: red;
+}
+
+.nav-menu > ul > li > ul > li.active {
+    background-color: #7c7c7c;
+    color: white;
+}
+
+.nav .active a i {
+    color: white;
+}
+
+.nav-menu {
+
+}
+
+.nav-menu ul {
+    list-style: none;
+}
+
+.nav-menu .first {
+    border-top: none;
+}
+
+.nav-menu > ul li {
+    display: block;
+    border-top: 1px solid #5c5c5c;
+}
+
+.nav-menu > ul li a {
+    display: block;
+    font-size: 14px;
+    font-weight: 300;
+    padding: 15px 15px;
+    text-decoration: none;
+    position: relative;
+    outline: none;
+}
+
+.nav-menu > ul li .arrow {
+    position: absolute;
+    right: 10px;
+    bottom: 15px;
+}
+
+.nav-menu > ul li:hover {
+    background-color: black;
+}
+
+.nav-menu > ul > li[class~="active"]:hover {
+    background-color: red;
+}
+
+.nav-menu > ul li a span {
+    color: white;
+    font-weight: 300;
+}
+
+.nav-menu > ul li a i {
+    color: #969696;
+    font-size: 13px;
+    margin-right: 10px;
+}
+
+.nav-menu > ul > li > ul li {
+    background-color: #242424;
+    border-top: none;
+    padding-left: 40px;
+}
+
+.nav-menu > ul > li > ul li:hover {
+    background-color: #535353;
+    color: white;
+}
+
+@media screen and (min-width: 980px) {
+    .nav {
+        display: block;
+    }
+
+    .nav-menu-control {
+        display: none;
+    }
+    .nav-menu > ul li a .selected{
+        position: absolute;
+        right: 0px;
+        bottom: 10px;
+        width: 8px;
+        height: 25px;
+        background-image: url("../img/sidebar-menu-arrow.png");
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 979px) {
+    .nav {
+        display: block;
+    }
+
+    .nav-menu-control {
+        display: none;
+    }
+
+    .nav-menu > ul li a .selected{
+        position: absolute;
+        right: 0px;
+        bottom: 10px;
+        width: 8px;
+        height: 25px;
+        background-image: url("../img/sidebar-menu-arrow.png");
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .nav {
+        display: none;
+        padding: 4px 10px;
+        box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+    }
+
+    .nav li {
+        background-color: #282828;
+    }
+
+    .nav-menu-control {
+        display: block;
+    }
+}

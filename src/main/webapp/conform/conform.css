@@ -1,0 +1,59 @@
+.conform{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    display: none;
+    z-index: 999;
+}
+
+.conform-back{
+    width: 100%;
+    height: 100%;
+    opacity: .5;
+    background-color: black;
+}
+
+.conform-body{
+    position: absolute;
+    padding: 10px;
+    background-color: white;
+    visibility: hidden;
+    border-radius: 5px;
+    border: 1px solid lightblue;
+    box-shadow: 0px 0px 5px lightblue;
+    top: 40px;
+}
+
+.conform-body-show{
+    visibility: visible;;
+}
+
+@media screen and (min-width:980px) {
+    .conform-body{
+        left: 50%;
+        width: 50%;
+        border-radius: 5px;
+        margin-left: -25%;
+    }
+}
+
+@media screen and (min-width:768px) and (max-width: 979px) {
+    .conform-body{
+        left: 50%;
+        width: 50%;
+        border-radius: 5px;
+        margin-left: -25%;
+    }
+}
+
+@media screen and (max-width:767px){
+    .conform-body{
+        width: 94%;
+        margin-left: 3%;
+        border-radius: 5px;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+    }
+}

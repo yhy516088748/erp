@@ -1,0 +1,198 @@
+
+/* 白色 */
+
+.color-white{
+    color:white;
+}
+
+.bgcolor-white{
+    background-color: white;
+    color: black;
+}
+
+.bgcolor-white-heavy{
+    background-color: #f2f2f2;
+}
+
+.bdcolor-white{
+    border: 1px solid #f2f2f2;
+}
+
+.bdcolor-bottom-white{
+    display: block;
+    border-bottom: 2px solid #f2f2f2;
+}
+
+
+.btn.bgcolor-white:hover{
+    background-color: #f2f2f2;
+    cursor: pointer;
+}
+
+/* 黑色 */
+.color-black{
+    color:black;
+}
+
+.bgcolor-black {
+    background-color: #464646;
+    color: white;
+}
+
+.bgcolor-black-heavy {
+    background-color: black;
+}
+
+.bdcolor-black {
+    border: 1px solid #464646;
+}
+
+.bdcolor-bottom-black{
+    display: block;
+    border-bottom: 2px solid #464646;
+}
+
+.btn.bgcolor-black:hover{
+    background-color: black;
+    cursor: pointer;
+}
+
+/* 灰色 */
+.color-gray{
+    color:gray;
+}
+
+.bgcolor-gray{
+    background-color: lightgray;
+    color: black;
+}
+
+.bgcolor-gray-heavy{
+    background-color: gray;
+}
+
+.bdcolor-gray{
+    border: 1px solid lightgray;
+}
+
+.bdcolor-bottom-gray{
+    display: block;
+    border-bottom: 2px solid lightgray;
+}
+
+.btn.bgcolor-gray:hover{
+    background-color: gray;
+    cursor: pointer;
+}
+
+/* 橘色 */
+.color-orange{
+    color:orange;
+}
+
+.bgcolor-orange {
+    background-color: orange;
+    color: white;
+}
+
+.bgcolor-orange-heavy {
+    background-color: #faa200;
+}
+
+.bdcolor-orange{
+    border: 1px solid orange;
+}
+
+.bdcolor-bottom-orange{
+    display: block;
+    border-bottom: 2px solid orange;
+}
+
+.btn.bgcolor-orange:hover{
+    background-color: #faa200;
+    cursor: pointer;
+}
+
+/* 红色 */
+.color-red{
+    color:#ff9999;
+}
+
+.bgcolor-red {
+    background-color: #ff9999;
+    color: white;
+}
+
+.bgcolor-red-heavy {
+    background-color: #ef8a8a;
+}
+
+.bdcolor-red{
+    border: 1px solid #ff9999;
+}
+
+.bdcolor-bottom-red{
+    display: block;
+    border-bottom: 2px solid #ff9999;
+}
+
+.btn.bgcolor-red:hover{
+    background-color: #ef8a8a;
+    cursor: pointer;
+}
+
+/* 蓝色 */
+.color-blue{
+    color:#4b8df8;
+}
+
+.bgcolor-blue {
+    background-color: #4b8df8;
+    color: white;
+}
+
+.bgcolor-blue-heavy {
+    background-color: #4c79e5;
+}
+
+.bdcolor-blue{
+    border: 1px solid #4b8df8;
+}
+
+.bdcolor-bottom-blue{
+    display: block;
+    border-bottom: 2px solid #4b8df8;
+}
+
+.btn.bgcolor-blue:hover{
+    background-color: #4c79e5;
+    cursor: pointer;
+}
+
+/* 绿色 */
+.color-green{
+    color:#84e084;
+}
+
+.bgcolor-green {
+    background-color: #84e084;
+    color: white;
+}
+
+.bgcolor-green-heavy {
+    background-color: #76d576;
+}
+
+.bdcolor-green {
+    border: 1px solid lightgreen;
+}
+
+.bdcolor-bottom-green{
+    display: block;
+    border-bottom: 2px solid lightgreen;
+}
+
+.btn.bgcolor-green:hover{
+    background-color: #76d576;
+    cursor: pointer;
+}

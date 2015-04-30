@@ -1,0 +1,137 @@
+@font-face {
+	font-family: 'icomoon';
+	src:url('fonts/icomoon.eot?krxdvr');
+	src:url('fonts/icomoon.eot?#iefixkrxdvr') format('embedded-opentype'),
+		url('fonts/icomoon.woff?krxdvr') format('woff'),
+		url('fonts/icomoon.ttf?krxdvr') format('truetype'),
+		url('fonts/icomoon.svg?krxdvr#icomoon') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+	font-family: 'icomoon';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.icon-info:before {
+	content: "\e603";
+}
+
+.icon-users:before {
+	content: "\e601";
+}
+
+.icon-reorder:before {
+	content: "\e602";
+}
+
+.icon-add-circle:before {
+	content: "\e607";
+}
+
+.icon-report:before {
+	content: "\e604";
+}
+
+.icon-list-down:before {
+	content: "\e600";
+}
+
+.icon-keyboard-arrow-left:before {
+	content: "\e605";
+}
+
+.icon-keyboard-arrow-right:before {
+	content: "\e606";
+}
+
+.icon-chevron-down:before {
+	content: "\f0a3";
+}
+
+.icon-chevron-left:before {
+	content: "\f0a4";
+}
+
+.icon-garbage:before {
+	content: "\f0d0";
+}
+
+.icon-right:before {
+	content: "\f05a";
+}
+
+.icon-home:before {
+	content: "\e900";
+}
+
+.icon-hospital:before {
+	content: "\e903";
+}
+
+.icon-product:before {
+	content: "\e926";
+}
+
+.icon-policy:before {
+	content: "\e92b";
+}
+
+.icon-claim:before {
+	content: "\e92c";
+}
+
+.icon-logout:before {
+	content: "\e967";
+}
+
+.icon-message:before {
+	content: "\e96b";
+}
+
+.icon-userinfo:before {
+	content: "\e971";
+}
+
+.icon-system:before {
+	content: "\e995";
+}
+
+.icon-menu:before {
+	content: "\e9bd";
+}
+
+.icon-delete:before {
+	content: "\ea0f";
+}
+
+.icon-submit:before {
+	content: "\ea10";
+}
+
+.icon-checkbox-checked:before {
+	content: "\ea52";
+}
+
+.icon-checkbox-unchecked:before {
+	content: "\ea53";
+}
+
+.icon-radio-checked:before {
+	content: "\ea54";
+}
+
+.icon-radio-unchecked:before {
+	content: "\ea56";
+}
+

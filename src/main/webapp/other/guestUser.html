@@ -1,0 +1,218 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=gb2312"/>
+    <title>申请页面</title>
+    <style type="text/css">
+        .container {
+            min-width: 1280px;
+            width: 1280px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            margin: 1px auto;
+            font-size: 18px;
+            font-family: "Helvetica Neue", Helvetica, Microsoft Yahei, Hiragino Sans GB, WenQuanYi Micro Hei, sans-serif;
+        }
+
+        table tr {
+            line-height: 30px;
+            height: 30px;
+        }
+
+        .label {
+            text-align: right;
+            padding-right: 10px;
+            font-size: 16px;
+        }
+
+        .root {
+            font-size: 20px;
+            text-align: center;
+        }
+
+        .title {
+            text-align: center;
+        }
+
+        table tr td input {
+            line-height: 30px;
+            height: 30px;
+            font-size: 16px;
+            padding-left: 10px;
+            padding-right: 10px;
+            width: 100%;
+            box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            border: none;
+            border-bottom: 1px solid gray;
+        }
+
+        input:focus {
+            outline: none;
+            border-bottom-color: red;
+        }
+
+        .xbt {
+            text-align: center;
+            padding-left: 30px;
+        }
+
+        .zdq {
+            text-align: left;
+
+        }
+
+        .xbt {
+            text-align: left;
+        }
+
+        form {
+            float: right;
+            margin-top: 10px;
+        }
+
+    </style>
+</head>
+
+<body>
+<div class="container">
+    <h1>上海坤金泉投资管理有限公司</h1>
+    <table class="root">
+        <tr>
+            <td>填表须知</td>
+        </tr>
+        <tr>
+            <td>
+                <p>首先欢迎和感谢您参加应聘！<br/>
+                    我们将通过此表了解您的情况，请认真填写，以便使我们能掌握真实准确的信息。<br/>
+                    如果表内项目本人么有，请写“无”。我们将对您的各项信息予以保密</p>
+            </td>
+        </tr>
+    </table>
+    <table class="first">
+        <tr>
+            <td colspan="8" class="xbt">一、基本信息</td>
+        </tr>
+        <tr>
+            <td class="label">姓名</td>
+            <td><input type="text" id="username"/></td>
+            <td class="label">性别</td>
+            <td><input type="text" id="sex"/></td>
+            <td class="label">出生年月</td>
+            <td><input type="text" id="datetime"/></td>
+            <td class="label">政治面貌</td>
+            <td><input type="text" id="zzmm"/></td>
+        </tr>
+        <tr>
+            <td class="label">民族</td>
+            <td><input type="text" id="mz"/></td>
+            <td class="label">身高</td>
+            <td><input type="text" id="sg"/></td>
+            <td class="label">婚姻状况</td>
+            <td><input type="text" id="hy"/></td>
+            <td class="label">兴趣爱好</td>
+            <td><input type="text" id="xq"/></td>
+        </tr>
+        <tr>
+            <td class="label">身份证号</td>
+            <td colspan="3"><input type="text" id="number"/></td>
+            <td class="label">籍贯</td>
+            <td><input type="text" id="jg"/></td>
+            <td class="label">户口所在地</td>
+            <td><input type="text" id="hk"/></td>
+        </tr>
+        <tr>
+            <td class="label">毕业院校与专业</td>
+            <td colspan="5"><input type="text" id="school"/></td>
+            <td class="label">学历/学位</td>
+            <td><input type="text" id="xw"/></td>
+        </tr>
+        <tr>
+            <td class="label">英语水平</td>
+            <td><input type="text" id="english"/></td>
+            <td class="label">毕业时间</td>
+            <td><input type="text" id="time"/></td>
+            <td class="label">身体状况</td>
+            <td><input type="text" id="stzk"/></td>
+            <td class="label">联系方式</td>
+            <td><input type="text" id="lxfs"/></td>
+        </tr>
+        <tr>
+            <td class="label" colspan="1">家庭住址</td>
+            <td colspan="8"><input type="text" id="address"/></td>
+        </tr>
+    </table>
+    <table class="two">
+        <tr>
+            <td colspan="8" class="xbt">二、主要学习经历（高中写起）</td>
+        </tr>
+        <tr class="title">
+            <td>起止时间</td>
+            <td>学校</td>
+            <td>专业</td>
+            <td>学习形式</td>
+        </tr>
+        <tr>
+            <td><input type="text"/></td>
+            <td><input type="text"/></td>
+            <td><input type="text"/></td>
+            <td><input type="text"/></td>
+        </tr>
+        <tr>
+            <td><input type="text"/></td>
+            <td><input type="text"/></td>
+            <td><input type="text"/></td>
+            <td><input type="text"/></td>
+        </tr>
+        <tr>
+            <td><input type="text"/></td>
+            <td><input type="text"/></td>
+            <td><input type="text"/></td>
+            <td><input type="text"/></td>
+        </tr>
+    </table>
+    <table class="three">
+        <tr>
+            <td colspan="8" class="xbt">三、主要工作（实践）经历</td>
+        </tr>
+        <tr class="title">
+            <td>起止时间</td>
+            <td>单位</td>
+            <td>部门</td>
+            <td>岗位职务</td>
+        </tr>
+        <tr>
+            <td><input type="text"/></td>
+            <td><input type="text"/></td>
+            <td><input type="text"/></td>
+            <td><input type="text"/></td>
+        </tr>
+        <tr>
+            <td><input type="text"/></td>
+            <td><input type="text"/></td>
+            <td><input type="text"/></td>
+            <td><input type="text"/></td>
+        </tr>
+        <tr>
+            <td><input type="text"/></td>
+            <td><input type="text"/></td>
+            <td><input type="text"/></td>
+            <td><input type="text"/></td>
+        </tr>
+    </table>
+    <form action="#" method="post">
+        <a href="wite.html">提交</a>
+        <input type="button" name="打印" value="打印"/>
+        <input type="button" name="取消" value="取消"/>
+    </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<%@ page contentType="text/html; charset=utf-8"%> <%@ taglib prefix="s"
+uri="/struts-tags"%>
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Company Management</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--[if lte IE 8]>
+    <script type="text/javascript" src="js/html5.js"></script>
+    <script type="text/javascript" src="js/respond.min.js"></script>
+    <![endif]-->
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="js/css3-mediaqueries.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/color.css">
+    <link rel="stylesheet" type="text/css" href="css/animations.css">
+    <link rel="stylesheet" type="text/css" href="css/icon.css">
+    <!--<link rel="stylesheet" type="text/css" href="css/font-awesome.css">-->
+    <link rel="stylesheet" type="text/css" href="css/punchclock.css">
+    <link rel="stylesheet" type="text/css" href="form/form.css">
+    <link rel="stylesheet" type="text/css" href="nav/nav.css">
+    <link rel="stylesheet" type="text/css" href="portlet/portlet.css">
+    <link rel="stylesheet" type="text/css" href="conform/conform.css">
+    <link rel="stylesheet" type="text/css" href="message/message.css">
+    <link rel="stylesheet" type="text/css" href="calendar/calendar.css">
+
+    <script src="http://l2.io/ip.js?var=myip" type="text/javascript"></script>
+    <script src="js/ip.js" type="text/javascript"></script>
+
+    <script src="js/util.js" type="text/javascript"></script>
+    <script src="js/jquery.js"></script>
+    <script src="js/module.js"></script>
+    <script src="js/index.js"></script>
+    <script src="nav/nav.js"></script>
+    <script src="portlet/portlet.js"></script>
+    <script src="conform/conform.js"></script>
+    <script src="message/message.js"></script>
+    <script src="calendar/calendar.js"></script>
+</head>
+
+<body class="bgcolor-black">
+<div class="container">
+    <div class="header bgcolor-black-heavy">
+        <div class="header-logo">
+            <a href="#" hidefocus="true">
+                <img src="img/logo.png" alt="logo">
+            </a>
+        </div>
+        <div id="header-nav" class="header-nav">
+
+        </div>
+        <a style="float:right;padding-right:30px;color:white" href="<s:url value="/j_spring_security_logout"/>" target="_parent">退出</a>
+    </div>
+    <div class="content">
+        <div id="content-nav" class="content-nav content-left bgcolor-black">
+        </div>
+        <div id="content-main" class="content-main content-left">
+            <div id="content-container" class="container">
+            </div>
+        </div>
+    </div>
+    <div class="footer bgcolor-black">
+        <div id="footer-title " class="footer-title">
+            <a>公网IP:</a>
+            <a id="public-ip"></a>
+            <a>本地IP:</a>
+            <a id="local-ip"></a>
+            <script>
+                getIp();
+            </script>
+        </div>
+    </div>
+</div>
+<script>
+    var minHeight = $(this).height() - 80;
+    $(".content-main").css("min-height",minHeight);
+    $(window).resize(function(){
+        var minHeight = $(this).height() - 80;
+        $(".content-main").css("min-height",minHeight);
+    })
+</script>
+</body>
+</html>

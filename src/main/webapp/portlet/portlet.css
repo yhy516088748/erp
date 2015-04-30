@@ -1,0 +1,35 @@
+
+.portlet{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.portlet .caption{
+    height: 40px;
+    line-height: 40px;
+    text-align: left;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 16px;
+}
+
+.caption-title{
+    margin-left: 10px;
+}
+
+.caption-control{
+    float:right;
+}
+
+.caption-control i{
+    display: inline-block;
+    cursor: pointer;
+    margin-right: 3px;
+}
+
+.portlet .body{
+    border-radius: 5px;
+}
+

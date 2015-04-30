@@ -1,0 +1,11 @@
+.punch-clock{
+}
+
+.punch-clock-body{
+    padding: 10px;
+    text-align: center;
+}
+
+.punch-clock-body-child{
+    margin-bottom: 10px;
+}

@@ -1,0 +1,25 @@
+<%@ page contentType="text/html; charset=utf-8"%>
+<%@ taglib prefix="s" uri="/struts-tags"%>
+<!DOCTYPE html>
+<head>
+<meta charset="utf-8" />
+<title>KJQ ERP</title>
+<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+<meta content="" name="description" />
+<meta content="" name="author" />
+</head>
+<body>
+	<div>
+		<form name="loginForm" method="post" action="<s:url value="erp/j_spring_security_check"/>">
+		<ul>
+			<li><input name="j_username" id="j_username" type="text" /></li>
+			<li><input type="password" name="j_password" id="j_password" /></li>
+			<li><input type="submit" value="登录" /></li>
+		</ul>
+		</form>
+	</div>
+</body>
+
+<!-- END BODY -->
+
+</html>

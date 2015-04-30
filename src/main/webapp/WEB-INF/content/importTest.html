@@ -1,0 +1,24 @@
+ <%@ page contentType="text/html; charset=utf-8"%> <%@ taglib prefix="s"
+uri="/struts-tags"%>
+<!DOCTYPE html>
+<html>
+<head lang="en">
+<meta charset="UTF-8">
+<title>Company Management</title>
+</head>
+<body>
+	<div>
+		<ul>
+			<s:form method="post" action="importTest" theme="simple"
+				namespace="/" name="editForm" id="tab" cssClass="form-horizontal"
+				enctype="multipart/form-data">
+
+				<li><label>附件</label> <s:file name="importFile"
+						cssClass="dfinput"></s:file></li>
+				<li><input name="" type="submit" class="btn" value="保存" /></li>
+			</s:form>
+		</ul>
+	</div>
+</body>
+
+</html>

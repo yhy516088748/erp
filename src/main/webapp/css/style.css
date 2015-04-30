@@ -1,0 +1,125 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+html,body{
+    height: 100%;
+}
+
+body{
+    font-family: "HelveticaNeue", "Helvetica Neue", Helvetica, Arial;
+}
+
+/* 设定背景颜色 */
+.container{
+    height: 100%;
+}
+
+/* 页眉部分 */
+.header{
+    position: relative;
+    height: 40px;
+    line-height: 40px;
+    padding-left: 20px;
+}
+
+.header-logo{
+    float: left;
+}
+
+.header-logo img{
+    border:none;
+}
+
+.header-nav{
+    float: right;
+}
+
+.content{
+    margin-bottom: 30px;
+    padding-right: 1px;
+}
+
+/* 主体部分 */
+@media screen and (min-width:980px) {
+    .content-nav{
+        width: 225px;
+    }
+    .content-nav.content-left{
+        float:left;
+    }
+
+    .content-nav.content-right{
+        float: right;
+    }
+    .content-main.content-left{
+        margin-left: 225px;
+    }
+
+    .content-main.content-right{
+        margin-right: 225px;
+    }
+
+    .content-main{
+        background-color: white;
+        padding: 18px 14px;
+    }
+}
+
+@media screen and (min-width:768px) and (max-width: 979px) {
+    .content-nav{
+        width: 150px;
+    }
+    .content-nav.content-left{
+        float:left;
+    }
+
+    .content-nav.content-right{
+        float: right;
+    }
+    .content-main.content-left{
+        margin-left: 150px;
+    }
+    .content-main.content-right{
+        margin-right: 150px;
+    }
+
+    .content-nav {
+        width: 150px;
+    }
+
+    .content-main {
+        background-color: white;
+        padding: 10px 7px;
+    }
+}
+
+@media screen and (max-width:767px){
+    .content-nav {
+
+    }
+    .content-main{
+        background-color: white;
+        padding: 4px 10px;
+    }
+}
+
+
+/* 页脚部分 */
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    margin-top: 30px;
+    font-size: 12px;
+}
+
+.footer-title {
+    text-align: center;
+    line-height: 30px;
+}
+
+.footer-title a {
+    font-size: 14px;
+    color: #c2c2c2;
+}
