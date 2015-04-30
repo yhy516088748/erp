@@ -91,7 +91,7 @@ public class UserAction extends ActionSupport {
 		if(id==null||id.isEmpty()){
 			root.put("Status", "ERROR");
 			root.put("Reason", "请选择用户");
-		}else{
+		}else{ 
 			userDao.remove(id);
 			root.put("Status", "OK");
 		}
