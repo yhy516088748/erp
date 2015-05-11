@@ -1,0 +1,78 @@
+
+说明，所有参数 编码格式：UTF-8
+
+日期同步
+
+时间同步
+
+
+一	用户操作
+	1>	getUserInfo.do?id=1
+		http://localhost:8080/erp/getUserInfo.do?id=1
+		{"Status":"OK","Info":{"isPOInsurance":"false","ContractEndDate":"2010-01-01","birthday":"2015-01-01","phone":"phone1","remark":"","gjjAccount":"12345678","workYear":"2012","password":"ba4dc7aae0462af3a80e18beda282867","Professional":"专业1","sbAccount":"社保12","isMarry":"false","zipCode":"邮编1","name":"0","gender":"男","isInsurance":"false","workEndTime":"17:00","idNumber":"张一","loginName":"1","nativePlace":"浦东","isChildInsurance":"false","ContractStartDate":"2015-12-31","workStartTime":"08:30","Education":"本科","address":"浦东","email":"123456@qq.com","isChild":"false"}}
+
+	2>	addUser			para		loginName,name,password ... (string,string,string ...)
+		http://localhost:8080/erp/addUser.do?name=yanghongya&loginName=yhy&password=yhy
+		{"Status":"OK"}
+
+	3>	delUser			para		id=user.id
+		http://localhost:8080/erp/delUser.do?id=8a8a8a044d321e5b014d323dc7610001
+		{"Status":"OK"}
+
+	4>	getUserList		para		null
+		http://localhost:8080/erp/getUserList.do
+		{"Status":"OK","List":[{"isPOInsurance":"false","ContractEndDate":"2010-01-01","birthday":"2015-01-01","phone":"phone1","remark":"","gjjAccount":"12345678","workYear":"2012","password":"ba4dc7aae0462af3a80e18beda282867","Professional":"专业1","sbAccount":"社保12","isMarry":"false","zipCode":"邮编1","name":"0","gender":"男","isInsurance":"false","workEndTime":"17:00","idNumber":"张一","loginName":"1","nativePlace":"浦东","isChildInsurance":"false","ContractStartDate":"2015-12-31","workStartTime":"08:30","Education":"本科","address":"浦东","email":"123456@qq.com","isChild":"false"},{"isPOInsurance":"true","ContractEndDate":"2010-01-01","birthday":"2015-01-01","phone":"phone1","remark":"","gjjAccount":"12345678","workYear":"2012","password":"ba4dc7aae0462af3a80e18beda282867","Professional":"专业1","sbAccount":"社保12","isMarry":"false","zipCode":"邮编1","name":"9","gender":"女","isInsurance":"false","workEndTime":"17:00","idNumber":"张一","loginName":"test1","nativePlace":"徐汇","isChildInsurance":"false","ContractStartDate":"2015-12-31","workStartTime":"9:00","Education":"本科","address":"徐汇","email":"123456@qq.com","isChild":"false"},{"isPOInsurance":"false","ContractEndDate":"2010-01-01","birthday":"2015-01-01","phone":"phone1","remark":"","gjjAccount":"12345678","workYear":"2012","password":"ba4dc7aae0462af3a80e18beda282867","Professional":"专业1","sbAccount":"社保12","isMarry":"false","zipCode":"邮编1","name":"1","gender":"男","isInsurance":"false","workEndTime":"17:00","idNumber":"张一","loginName":"test1","nativePlace":"徐汇","isChildInsurance":"false","ContractStartDate":"2015-12-31","workStartTime":"08:30","Education":"本科","address":"徐汇","email":"123456@qq.com","isChild":"false"},{"isPOInsurance":"false","ContractEndDate":"2010-01-01","birthday":"2015-01-01","phone":"phone1","remark":"","gjjAccount":"12345678","workYear":"2012","password":"ba4dc7aae0462af3a80e18beda282867","Professional":"专业1","sbAccount":"社保12","isMarry":"false","zipCode":"邮编1","name":"2","gender":"男","isInsurance":"false","workEndTime":"17:00","idNumber":"张一","loginName":"test1","nativePlace":"黄埔","isChildInsurance":"false","ContractStartDate":"2015-12-31","workStartTime":"08:30","Education":"本科","address":"黄埔","email":"123456@qq.com","isChild":"false"},{"isPOInsurance":"false","ContractEndDate":"2010-01-01","birthday":"2015-01-01","phone":"phone1","remark":"","gjjAccount":"12345678","workYear":"2012","password":"ba4dc7aae0462af3a80e18beda282867","Professional":"专业1","sbAccount":"社保12","isMarry":"false","zipCode":"邮编1","name":"3","gender":"男","isInsurance":"false","workEndTime":"17:00","idNumber":"张一","loginName":"test1","nativePlace":"闵行","isChildInsurance":"false","ContractStartDate":"2015-12-31","workStartTime":"08:30","Education":"本科","address":"闵行","email":"123456@qq.com","isChild":"false"},{"isPOInsurance":"false","ContractEndDate":"2010-01-01","birthday":"2015-01-01","phone":"phone1","remark":"","gjjAccount":"12345678","workYear":"2012","password":"ba4dc7aae0462af3a80e18beda282867","Professional":"专业1","sbAccount":"社保12","isMarry":"false","zipCode":"邮编1","name":"4","gender":"男","isInsurance":"false","workEndTime":"17:00","idNumber":"张一","loginName":"test1","nativePlace":"浦东","isChildInsurance":"false","ContractStartDate":"2015-12-31","workStartTime":"08:30","Education":"本科","address":"浦东","email":"123456@qq.com","isChild":"false"},{"isPOInsurance":"true","ContractEndDate":"2010-01-01","birthday":"2015-01-01","phone":"phone1","remark":"","gjjAccount":"12345678","workYear":"2012","password":"ba4dc7aae0462af3a80e18beda282867","Professional":"专业1","sbAccount":"社保12","isMarry":"false","zipCode":"邮编1","name":"5","gender":"男","isInsurance":"false","workEndTime":"17:00","idNumber":"张一","loginName":"test1","nativePlace":"徐汇","isChildInsurance":"false","ContractStartDate":"2015-12-31","workStartTime":"08:30","Education":"本科","address":"徐汇","email":"123456@qq.com","isChild":"false"},{"isPOInsurance":"true","ContractEndDate":"2010-01-01","birthday":"2015-01-01","phone":"phone1","remark":"","gjjAccount":"12345678","workYear":"2012","password":"ba4dc7aae0462af3a80e18beda282867","Professional":"专业1","sbAccount":"社保12","isMarry":"false","zipCode":"邮编1","name":"6","gender":"女","isInsurance":"false","workEndTime":"17:00","idNumber":"张一","loginName":"test1","nativePlace":"黄埔","isChildInsurance":"false","ContractStartDate":"2015-12-31","workStartTime":"9:00","Education":"本科","address":"黄埔","email":"123456@qq.com","isChild":"false"},{"isPOInsurance":"true","ContractEndDate":"2010-01-01","birthday":"2015-01-01","phone":"phone1","remark":"","gjjAccount":"12345678","workYear":"2012","password":"ba4dc7aae0462af3a80e18beda282867","Professional":"专业1","sbAccount":"社保12","isMarry":"false","zipCode":"邮编1","name":"7","gender":"女","isInsurance":"false","workEndTime":"17:00","idNumber":"张一","loginName":"test1","nativePlace":"闵行","isChildInsurance":"false","ContractStartDate":"2015-12-31","workStartTime":"9:00","Education":"本科","address":"闵行","email":"123456@qq.com","isChild":"false"},{"isPOInsurance":"true","ContractEndDate":"2010-01-01","birthday":"2015-01-01","phone":"phone1","remark":"","gjjAccount":"12345678","workYear":"2012","password":"ba4dc7aae0462af3a80e18beda282867","Professional":"专业1","sbAccount":"社保12","isMarry":"false","zipCode":"邮编1","name":"8","gender":"女","isInsurance":"false","workEndTime":"17:00","idNumber":"张一","loginName":"test1","nativePlace":"浦东","isChildInsurance":"false","ContractStartDate":"2015-12-31","workStartTime":"9:00","Education":"本科","address":"浦东","email":"123456@qq.com","isChild":"false"}]}
+
+二	组操作
+	1>	getGroupInfo		para		id=group.id
+		http://localhost:8080/erp/getGroupInfo.do?id=1
+		{"Status":"OK","Info":{"name":"1"}}
+		
+	2>	addGroup			para		name
+		http://localhost:8080/erp/addGroup.do?name=财务室
+		{"Status":"OK"}
+		
+	3>	delGroup			para		id=group.id
+		http://localhost:8080/erp/delGroup.do?id=8a8a8a044d324259014d324393270000
+		{"Status":"OK"}
+		
+	4>	getGroupList		para		null
+		http://localhost:8080/erp/getGroupList.do
+		{"Status":"OK","List":[{"id":"1","name":"1"},{"id":"8a8a8a044d324259014d324393270000","name":"财务室"}]}
+		
+		
+三	菜单操作
+	1>	getMenuInfo		para		id=menu.id
+		例如：1
+			http://localhost:8080/erp/getMenuInfo.do?id=1
+			{"Status":"OK","Info":{"childMenu":"[{id=2, icon=2, title=2, code=2}, {id=3, icon=3, title=3, code=3}]","id":"1","icon":"icon","title":"title","code":"code"}}
+		例如：2
+			http://localhost:8080/erp/getMenuInfo.do?id=3
+			{"Status":"OK","Info":{"id":"3","icon":"3","title":"3","code":"3"}}
+	
+	2>	getMenuList		para		null
+		http://localhost:8080/erp/getMenuList.do
+		{"Status":"OK","List":[{"childMenu":"[{id=2, icon=2, title=2, code=2}, {id=3, icon=3, title=3, code=3}]",
+									"id":"1",
+									"icon":"icon",
+									"title":"title",
+									"code":"code"},
+								{"childMenu":"[{id=5, icon=5, title=5, code=5}]",
+									"id":"4",
+									"icon":"4",
+									"title":"4",
+									"code":"4"}
+								]
+		}
+			
+四	职位操作	(TODO add,del,update)
+	1>	getPositionInfo	para	id=position.id
+		http://localhost:8080/erp/getPositionInfo.do?id=1
+		{"Status":"OK","Info":{"code":"ZJL","id":"1","name":"总经理"}}
+		
+	2>	getPositionList	para	null
+		http://localhost:8080/erp/getPositionList.do
+		{"Status":"OK","List":[{"code":"ZJL","id":"1","name":"总经理"},{"code":"JL","id":"2","name":"经理"},{"code":"ZR","id":"3","name":"主任"},{"code":"YWY","id":"4","name":"业务员"}]}
+		
+		
+		
