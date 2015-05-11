@@ -8,7 +8,6 @@ import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
-import com.kjq.erp.model.Group;
 import com.kjq.erp.model.Menu;
 
 @Repository("menuDao")
@@ -27,5 +26,20 @@ public class MenuDao extends GenericDaoHibernate<Menu, String>{
 		return detachedCriteria;
 	}
 	
+	
+	/**
+	 * 用户可访问的一级菜单
+	 * @param id
+	 * @return
+	 */
+	public List<Menu> findParentMenus(){
+		String hql = "select menu from Menu as menu where menu.parent is null";
+		return getHibernateTemplate().find(hql,new Object[]{});
+	}
+	public List<Menu> findChildMenus(Menu menu){
+		String hql = "select menu from Menu as menu where menu.parent.id = ?";
+		Object[]params = new Object[]{menu.getId()};
+		return getHibernateTemplate().find(hql,params);
+	}
 
 }

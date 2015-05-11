@@ -1,22 +1,25 @@
 package com.kjq.erp.actions;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
+import javax.servlet.http.HttpServletResponse;
+
+import net.sf.json.JSONObject;
+
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.kjq.erp.dao.hibernate.GroupDao;
-import com.kjq.erp.dao.hibernate.MenuDao;
+import com.kjq.erp.dao.hibernate.PositionDao;
 import com.kjq.erp.dao.hibernate.UserDao;
-import com.kjq.erp.model.Group;
-import com.kjq.erp.model.Menu;
 import com.kjq.erp.model.User;
 import com.kjq.erp.util.DES;
 import com.kjq.erp.util.PropertyUtils;
@@ -24,17 +27,14 @@ import com.opensymphony.xwork2.ActionSupport;
 
 @ParentPackage("json-default")
 public class UserAction extends ActionSupport {
-
-	private static final long serialVersionUID = 1L;
-
+	
+	private static final long serialVersionUID = -961423133882484644L;
 	@Autowired
 	private UserDao userDao;
 	@Autowired
-	private GroupDao groupDao;
-	@Autowired
-	private MenuDao menuDao;
+	private PositionDao positionDao;
 
-	private Map root;
+	private Map<String, String> root;
 	private String id;
 	private String name;
 	private String loginName;
@@ -46,176 +46,135 @@ public class UserAction extends ActionSupport {
 	 * delUser			para		id=user.id
 	 * getUserList		para		null
 	 * 
-	 * getGroupInfo		para		id=group.id
-	 * addGroup			para		name
-	 * delGroup			para		id=group.id
-	 * getGroupList		para		null
-	 * 
-	 * getMenuInfo		para		id=menu.id
-	 * getMenuList		para		null
-	 * 
-	 * 
 	 * */
-	
 	
 	@Action(value = "getUserInfo", results = {@Result(type = "json", params = {"root", "root"})})
 	public String getUserInfo() throws IOException {
-		root = new HashMap();
+		root = new HashMap<String, String>();
 
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		User user = userDao.get(id);
+
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("loginName", user.getLoginName());
+		map.put("password", user.getPassword());
+		map.put("name", user.getName());
+		map.put("idNumber", user.getIdNumber());
+		map.put("gender", user.getGender());
+		map.put("birthday", sdf.format(user.getBirthday()));
+		map.put("email", user.getEmail());
+		map.put("phone", user.getPhone());
+		map.put("address", user.getAddress());
+		map.put("zipCode", user.getZipCode());
+		map.put("nativePlace", user.getNativePlace());
+		map.put("gjjAccount", user.getGjjAccount());
+		map.put("sbAccount", user.getSbAccount());
+		map.put("workYear", user.getWorkYear());
+		map.put("isMarry", user.getIsMarry().toString());
+		map.put("isInsurance", user.getIsInsurance().toString());
+		map.put("isPOInsurance", user.getIsPOInsurance().toString());
+		map.put("isChild", user.getIsChild().toString());
+		map.put("isChildInsurance", user.getIsChildInsurance().toString());
+		map.put("Education", user.getEducation());
+		map.put("Professional", user.getProfessional());
+		map.put("workStartTime", user.getWorkStartTime());
+		map.put("workEndTime", user.getWorkEndTime());
+		map.put("ContractStartDate", sdf.format(user.getContractEndDate()));
+		map.put("ContractEndDate", sdf.format(user.getContractStartDate()));
+		map.put("remark", user.getRemark());
 		root.put("Status", "OK");
-		root.put("Info", user);
+		root.put("Info", map.toString());
 
 		return SUCCESS;
 	}
-	@Action(value="addUser",results={@Result(type="json",params={"root","root"})})
-	public String addUser() throws IOException{
-		root = new HashMap();
-		
-		User user = new User();
-		user.setLoginName(loginName);
-		user.setName(name);
-		try {
-			user.setPassword(DES.encrypt(PropertyUtils.getStringValByKey("passwordSeed"), password));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		userDao.save(user);
-		root.put("Status", "OK");
-		return SUCCESS;
-	}
-	@Action(value="delUser",results={@Result(type="json",params={"root","root"})})
-	public String delUser() throws IOException{
-		root = new HashMap();
-		
-		if(id==null||id.isEmpty()){
-			root.put("Status", "ERROR");
-			root.put("Reason", "请选择用户");
-		}else{ 
-			userDao.remove(id);
-			root.put("Status", "OK");
-		}
-		return SUCCESS;
-	}
-
-	@Action(value = "getUserList", results = {@Result(type = "json", params = {
-			"root", "root"})})
-	public String getUserList() throws IOException {
-
-		root = new HashMap();
-
-		List<User> userList = userDao.findByAll();
-
-		
-		root.put("Status", "OK");
-		root.put("List", userList);
-
-		return SUCCESS;
-	}
-	
-	@Action(value="getGroupInfo",results={@Result(type="json",params={"root","root"})})
-	public String getGroupInfo() throws IOException{
-		root = new HashMap();
-		Group group = groupDao.get(id);
-		Map map = new HashMap();
-		map.put("name", group.getName());
-		root.put("Status", "OK");
-		root.put("Info", map);
-		return SUCCESS;
-	}
-	
-	@Action(value="addGroup",results={@Result(type="json",params={"root","root"})})
-	public String addGroup() throws IOException{
-		root = new HashMap();
-		Group group = new Group();
-		group.setName(name); 
-		groupDao.save(group);
-		
-		root.put("Status", "OK");		
-		
-		return SUCCESS;
-	}
-	
-	@Action(value="delGroup",results={@Result(type="json",params={"root","root"})})
-	public String delGroup() throws IOException{
-		root = new HashMap();
-		
-		if(id==null||id.isEmpty()){
-			root.put("Status", "ERROR");
-			root.put("Reason", "请选择组");
-		}else{
-			groupDao.remove(id);
-			root.put("Status", "OK");
-		}
-		
-		return SUCCESS;
-	}
-	
-	@Action(value="getGroupList",results={@Result(type="json",params={"root","root"})})
-	public String getGroupList() throws IOException{
-		root = new HashMap();
-		
-		List<Group> groupList = groupDao.findByAll();
-		List list = new ArrayList();
-		for(Group group:groupList){
-			Map map = new HashMap();
-			map.put("id", group.getId());
-			map.put("name", group.getName());
-			if(!map.isEmpty()){
-				list.add(map);
-			}
-		}
-		root.put("Status", "OK");
-		root.put("List", list);
-		
-		return SUCCESS;
-	}
-	
-	@Action(value="getMenuInfo",results = {@Result(type = "json", params = {
-			"root", "root"})})
-	public String getMenuInfo() throws IOException{
-		root = new HashMap();
-		
-		Menu menu = menuDao.get(id);
-		
-		Map map = new HashMap();
-		map.put("id", menu.getId());
-		map.put("title", menu.getTitle());
-		map.put("code", menu.getCode());
-		map.put("icon", menu.getIcon());
-		System.out.println(map);
-		System.out.println(menu.getChildMenu().toArray());
-		
-//		menu.getChildMenu().;
-//		Object[] oa = menu.getChildMenu().toArray();
-//		System.out.println(oa.length);
-//		for(Object m:oa){
-//			System.out.println(((Menu)m).getTitle());
+//	@Action(value="addUser",results={@Result(type="json",params={"root","root"})})
+//	public String addUser() throws IOException{
+//		root = new HashMap<String, Object>();
+//		
+//		User user = new User();
+//		user.setLoginName(loginName);
+//		user.setName(name);
+//		user.setPosition(positionDao.get("1"));
+//		user.setCreateTime(new Date());
+//		try {
+//			user.setPassword(DES.encrypt(PropertyUtils.getStringValByKey("passwordSeed"), password));
+//		} catch (Exception e) {
+//			e.printStackTrace();
 //		}
-		
-		root.put("Status", "OK");
-//		menu.setParent(null);
-//		root.put("Info", menu);
-		return SUCCESS;
-	}
+//		userDao.save(user);
+//		root.put("Status", "OK");
+//		return SUCCESS;
+//	}
+//	@Action(value="delUser",results={@Result(type="json",params={"root","root"})})
+//	public String delUser() throws IOException{
+//		root = new HashMap<String, Object>();
+//		
+//		if(id==null||id.isEmpty()){
+//			root.put("Status", "ERROR");
+//			root.put("Reason", "请选择用户");
+//		}else{ 
+//			userDao.remove(id);
+//			root.put("Status", "OK");
+//		}
+//		return SUCCESS;
+//	}
+//
+//	@Action(value = "getUserList", results = {@Result(type = "json", params = {
+//			"root", "root"})})
+//	public String getUserList() throws IOException {
+//
+//		root = new HashMap<String, Object>();
+//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//
+//		List<Map<String, String>> userList = new ArrayList<Map<String, String>>();
+//		List<User> list = userDao.findByAll();
+//		for(User user:list){
+//			Map<String, String> map = new HashMap<String, String>();
+//			map.put("loginName", user.getLoginName());
+//			map.put("password", user.getPassword());
+//			map.put("name", user.getName());
+//			map.put("idNumber", user.getIdNumber());
+//			map.put("gender", user.getGender());
+//			map.put("birthday", sdf.format(user.getBirthday()));
+//			map.put("email", user.getEmail());
+//			map.put("phone", user.getPhone());
+//			map.put("address", user.getAddress());
+//			map.put("zipCode", user.getZipCode());
+//			map.put("nativePlace", user.getNativePlace());
+//			map.put("gjjAccount", user.getGjjAccount());
+//			map.put("sbAccount", user.getSbAccount());
+//			map.put("workYear", user.getWorkYear());
+//			map.put("isMarry", user.getIsMarry().toString());
+//			map.put("isInsurance", user.getIsInsurance().toString());
+//			map.put("isPOInsurance", user.getIsPOInsurance().toString());
+//			map.put("isChild", user.getIsChild().toString());
+//			map.put("isChildInsurance", user.getIsChildInsurance().toString());
+//			map.put("Education", user.getEducation());
+//			map.put("Professional", user.getProfessional());
+//			map.put("workStartTime", user.getWorkStartTime());
+//			map.put("workEndTime", user.getWorkEndTime());
+//			map.put("ContractStartDate", sdf.format(user.getContractEndDate()));
+//			map.put("ContractEndDate", sdf.format(user.getContractStartDate()));
+//			map.put("remark", user.getRemark());
+////			map.put("createTime", user.getCreateTime().toString());
+//			userList.add(map);
+//		}
+//
+//		
+//		root.put("Status", "OK");
+//		root.put("List", userList);
+//
+//		return SUCCESS;
+//	}
 	
-	@Action(value = "getMenuList", results = {@Result(type = "json", params = {
-			"root", "root"})})
-	public String getMenuList() throws IOException {
-		root = new HashMap();
-		List<Menu> menuList = menuDao.findByAll();
-		root.put("Status", "OK");
-		root.put("List", menuList);
-		return SUCCESS;
-
-	}
 	
 	
 	
-	public Map getRoot() {
+	
+	public Map<String, String> getRoot() {
 		return root;
 	}
-	public void setRoot(Map root) {
+	public void setRoot(Map<String, String> root) {
 		this.root = root;
 	}
 

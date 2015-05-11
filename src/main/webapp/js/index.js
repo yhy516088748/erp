@@ -5,6 +5,18 @@
 /* 各种初始化 */
 $(function () {
     /* 通过ajax 获取 直观数据 */
+	var request = $.ajax({
+	    url : "/erp/getUserList.do",
+	    type : "GET",
+	    dataType : "json",
+	    contentType : "json",
+	    success : function(List){
+	        console.log(List);
+	    },
+	    async : false
+	});
+	console.log($.parseJSON(request.responseText));
+
     userObj = {
         /* 用户信息 */
         user : {

@@ -21,6 +21,7 @@ public class Position extends UUIDEntity implements Serializable {
 	private static final long serialVersionUID = -3959628657005463434L;
 	private String name;
 	private String code;
+	
 	@Column(name="name",length=50)
 	public String getName() {
 		return name;

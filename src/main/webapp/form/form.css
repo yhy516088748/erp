@@ -1,6 +1,6 @@
 
 .btn,.text{
-    font-size: 18px;
+    font-size: 16px;
     border-radius: 3px;
     margin-top: 5px;
     margin-bottom: 5px;
@@ -16,6 +16,11 @@
     outline: none;
 }
 
+.btn-mini{
+    font-size: 14px;
+    border-radius: 2px;
+}
+
 /* 按钮的 radius 3px */
 .btn-left-radius{
     border-radius: 3px 0px 0px 3px;
@@ -28,7 +33,7 @@
 .text{
     border-style: none;
     outline: none;
-    border: 1px solid gray;
+    border: 1px solid #d0d0d0;
 }
 
 .text:focus{
@@ -38,4 +43,9 @@
 
 textarea{
     resize: none;
+}
+
+.label {
+    text-align: left;
+    display: block;
 }

@@ -16,6 +16,7 @@ import javax.persistence.Transient;
 import org.apache.struts2.json.annotations.JSON;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.Proxy;
 import org.springframework.context.annotation.Lazy;
 
 import com.kjq.erp.util.UUIDEntity;
@@ -168,7 +169,7 @@ public class Menu extends UUIDEntity implements Serializable,Comparable{
 	public void setTop(boolean top) {
 		this.top = top;
 	}
-	
+
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="parent")
 	public Set<Menu> getChildMenu() {
 		return childMenu;

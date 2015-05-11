@@ -5,7 +5,7 @@
     <mapping class="com.kjq.erp.model.Role"/>
     <mapping class="com.kjq.erp.model.User"/>
     <mapping class="com.kjq.erp.model.Group"/>
-    <mapping class="com.kjq.erp.model.Department"/>
     <mapping class="com.kjq.erp.model.Position"/>
+    <mapping class="com.kjq.erp.model.Signin"/>
 </session-factory>
 </hibernate-configuration>

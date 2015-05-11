@@ -1,25 +1,60 @@
 <%@ page contentType="text/html; charset=utf-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
+
 <!DOCTYPE html>
+
 <head>
-<meta charset="utf-8" />
-<title>KJQ ERP</title>
-<meta content="width=device-width, initial-scale=1.0" name="viewport" />
-<meta content="" name="description" />
-<meta content="" name="author" />
+    <meta charset="utf-8"/>
+    <title>坤金泉公司管理系统</title>
+
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta content="" name="description"/>
+    <meta content="" name="author"/>
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href="css/icon.css" rel="stylesheet" type="text/css"/>
+    <link href="css/login.css" rel="stylesheet" type="text/css"/>
+    <link href="css/color.css" rel="stylesheet" type="text/css"/>
+    <link href="form/form.css" rel="stylesheet" type="text/css"/>
+
 </head>
-<body>
-	<div>
-		<form name="loginForm" method="post" action="<s:url value="erp/j_spring_security_check"/>">
-		<ul>
-			<li><input name="j_username" id="j_username" type="text" /></li>
-			<li><input type="password" name="j_password" id="j_password" /></li>
-			<li><input type="submit" value="登录" /></li>
-		</ul>
-		</form>
-	</div>
-</body>
 
-<!-- END BODY -->
+<!-- END HEAD -->
 
-</html>
+<!-- BEGIN BODY -->
+
+<body class="login">
+
+<!-- BEGIN LOGO -->
+
+<div class="logo">
+    <img src="img/logo-big.png" alt=""/>
+</div>
+<div class="content">
+    <form class="form-vertical login-form" method = "post" action="<s:url value='erp/j_spring_security_check'/>">
+    <h3 class="form-title">Login to your account</h3>
+        <div class="control-group">
+            <label class="label" style = "margin: 5px">Username</label>
+            <div class="controls">
+                <i class="input-icon left icon-userinfo" style="padding: 7px 3px 9px 10px;"></i>
+                <input class="text" type="text" id = "j_username" placeholder="Username" name="j_username"/>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="label" style = "margin: 5px">Password</label>
+            <div class="controls">
+                <i class="input-icon left icon-userinfo" style="padding: 7px 3px 9px 10px"></i>
+                <input class="text" type="password" id="j_password"  placeholder="Password" name="j_password"/>
+            </div>
+        </div>
+        <div class="form-actions">
+            <label class="checkbox" style="text-align: left;">
+                <input type="checkbox" name="remember" value="1"/> Remember me
+            </label>
+            <button type="submit" class="btn bgcolor-green" style="float: right;">
+                Login
+            </button>
+        </div>
+    </form>
+</div>
+
+

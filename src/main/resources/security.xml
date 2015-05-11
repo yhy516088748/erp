@@ -10,9 +10,20 @@
 
     <context:component-scan base-package="com.kjq.erp.ext"/>
 	
+	<http pattern="/calendar/**" security="none"/>
+	<http pattern="/conform/**" security="none"/>
+	<http pattern="/css/**" security="none"/>
+	<http pattern="/form/**" security="none"/>
+	<http pattern="/img/**" security="none"/>
+	<http pattern="/js/**" security="none"/>
+	<http pattern="/message/**" security="none"/>
+	<http pattern="/nav/**" security="none"/>
+	<http pattern="/other/**" security="none"/>
+	<http pattern="/portlet/**" security="none"/>
 	 
 	<http auto-config="true" realm="kjq-erp">
 		
+		<!-- <intercept-url pattern="/**" access="IS_AUTHENTICATED_ANONYMOUSLY" /> -->
 		<intercept-url pattern="/login.do*" access="IS_AUTHENTICATED_ANONYMOUSLY" />
 		<intercept-url pattern="/**" access="ROLE_USER" />
 		<!-- 
@@ -43,8 +54,6 @@
         <beans:property name="securityMetadataSource" ref="securityMetadataSource"/>
         <beans:property name="accessDecisionManager" ref="accessDecisionManager"/> 
     </beans:bean>
-    
-
     
     <beans:bean id="securityMetadataSource" class="com.kjq.erp.ext.spring.security.CustomSecurityMetadataSource"/>
     <beans:bean id="accessDecisionManager" class="com.kjq.erp.ext.spring.security.CustomAccessDecisionManager"/>  
