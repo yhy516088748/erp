@@ -1,0 +1,93 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    background-color: white;
+}
+
+.container{
+    width: 500px;
+    margin: 25px auto;
+    font-family: "Helvetica Neue", Helvetica, Microsoft Yahei, Hiragino Sans GB, WenQuanYi Micro Hei, sans-serif;
+}
+
+.tab{
+    width: 100%;
+    height: 300px;
+    background-color: white;
+    border-radius: 5px;
+}
+
+
+.tab-menu{
+    margin: 10px;
+    height: 35px;
+    line-height: 35px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    border-radius: 5px;
+    position: relative;
+}
+
+.tab-menu .tab-menu-bottom{
+    position: absolute;
+    display: block;
+    height: 2px;
+    background-color: #ff8580;
+    left: -1px;
+    bottom: -2px;
+    border-radius: 1px;
+}
+.tab-menu ul{
+    list-style: none;
+}
+
+.tab-menu ul li{
+    float: left;
+    margin-left: -1px;
+}
+
+
+.tab-menu ul li a{
+    display: inline-block;
+    padding-left: 10px;
+    padding-right: 10px;
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    color: gray;
+    box-sizing: border-box;
+    background-color: white;
+    outline-style: none;
+    border-radius: 3px;
+    border: 1px solid lightgray;
+    position: relative;
+}
+
+
+.tab-menu ul li:hover a,.tab-menu .select{
+    color: #ff8580;
+}
+
+.tab-content{
+    margin: 10px;
+}
+
+.tab-content-body{
+    clear:left;
+    width: 100%;
+}
+
+.tab-content .active{
+
+}
+
+
+
+
+
+
+
+

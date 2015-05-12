@@ -1,0 +1,172 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+html,body{
+    width: 100%;
+    height: 100%;
+}
+
+.container{
+    width: 100%;
+    height: 100%;
+}
+
+/* Ui_DataTable */
+.data-table-div{
+    width: 100%;
+    height: 100%;
+    min-width: 270px;
+    font-size : 14px;
+}
+
+.data-table{
+    width: 100%;
+    outline-style: none;
+    border-collapse:collapse;
+    border-spacing:0;
+}
+
+.data-table-control{
+    width: 100%;
+    line-height: 40px;
+    height: 40px;
+    position: relative;
+}
+
+.data-table th, .data-table td{
+    line-height: 20px;
+    padding: 3px 5px;
+}
+
+.data-table-thead{
+
+}
+
+.data-table-tbody{
+
+}
+
+.data-table-tbody tr.light {
+    background-color: #fcfcfc;
+}
+
+.data-table-tbody tr:hover{
+    background-color: #f5f5f5;
+}
+
+.data-table-tbody > tr > td{
+     border-top: 1px solid #ebebeb;
+}
+
+.data-table-tbody .details{
+    background-color: #f5f5f5;
+    text-align: center;
+}
+
+.data-table-tbody .details ul{
+    list-style: none;
+    display: block;
+}
+
+.data-table-tbody .details ul li{
+    margin: 5px;
+    display: inline-block;
+    float: left;
+    width: 200px;
+}
+
+.data-table .btn{
+    margin-left: 3px;
+}
+
+.data-table .btn i{
+    display: block;
+    text-align: center;
+    margin-top: 1px;
+}
+
+.data-table .hidden{
+    display: none;
+}
+
+@media screen and (max-width: 680px) {
+    .data-table .hidden-540{
+        display: none;
+    }
+}
+
+/* Ui_DataTable End */
+
+
+/* Ui_Tab */
+
+.tab{
+    width: 100%;
+    background-color: white;
+}
+
+
+.tab-menu{
+    border-bottom: 1px solid lightgray;
+}
+/*
+.tab-menu .tab-menu-bottom{
+    position: absolute;
+    display: block;
+    height: 2px;
+    background-color: #ff8580;
+    left: -1px;
+    bottom: -2px;
+    border-radius: 0px 0px 3px 3px;
+}
+*/
+.tab-menu ul{
+    list-style: none;
+}
+
+.tab-menu ul li{
+    display: inline-block;
+}
+
+.tab-menu ul li a{
+    display: inline-block;
+    padding: 12px;
+    text-align: center;
+    text-decoration: none;
+    color: #424242;
+    box-sizing: border-box;
+    background-color: white;
+    outline-style: none;
+    font-size: 15px;
+}
+
+.tab-menu ul li:hover a{
+    cursor: pointer;
+}
+
+.tab-menu ul li.select{
+    margin-bottom: -1px;
+}
+
+.tab-menu .select a{
+    border-bottom: 1px solid white;
+    border-top: 3px solid #d12610;
+    border-left: 1px solid lightgray;
+    border-right:1px solid lightgray;
+    margin-top: -3px;
+    margin-left: 0px;
+}
+
+.tab-content{
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.tab-content-body{
+    width: 100%;
+}
+
+.tab-content .active{
+
+}

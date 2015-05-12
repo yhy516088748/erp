@@ -1,0 +1,23 @@
+ @OFrame-小杨 系统对接的FTP信息如下：
+
+地址：122.49.22.132
+
+端口：1021
+
+用户名：kun_jq
+
+目录：
+
+share-ama-pic-in：用于存放报盘的影像资料文件
+
+share-ama-in ：用于存放excel报盘文件，核心系统从此目录读盘；
+
+share-ama-err：用于存放理赔系统校验不通过的excel报盘文件；
+
+share-ama-copykun：用于坤金泉读取校验失败文件后将文件转移至此目录；
+
+OFrame-YJ(492866518) 11:00:36 
+
+@OFrame-小杨 ftp的密码是
+)OKMama@2014
+)OKMama@2014
