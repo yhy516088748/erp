@@ -20,21 +20,20 @@ import com.kjq.erp.util.UUIDEntity;
  */
 @Entity
 @Table(name = "tb_notepad")
-public class NotePad extends UUIDEntity implements Serializable{
+public class Notepad extends UUIDEntity implements Serializable{
 
-	private static final long serialVersionUID = -536778594213356731L;
-
-
-	private String title;
-	private String description;
+	private static final long serialVersionUID = 5562952379216714730L;
+	private String title;	//标题
+	private String description;//描述
 	
-	private Date startDate;
-	private Date endDate;
+	private Date startDate;//起始时间
+	private Date endDate;//结束时间
 	
-	private String remark;
+	private String remark;//备注
 	
 	private User user;
 
+	
 	@Column(name="title",length=50)
 	public String getTitle() {
 		return title;
@@ -53,28 +52,26 @@ public class NotePad extends UUIDEntity implements Serializable{
 		this.description = description;
 	}
 
-	@Column(name="startDate")
+	@Column
 	public Date getStartDate() {
 		return startDate;
 	}
-
 	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
 	
-	@Column(name="endDate")
+	@Column
 	public Date getEndDate() {
 		return endDate;
 	}
-
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
 
+	@Column
 	public String getRemark() {
 		return remark;
 	}
-
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
@@ -84,13 +81,8 @@ public class NotePad extends UUIDEntity implements Serializable{
 	public User getUser() {
 		return user;
 	}
-
 	public void setUser(User user) {
 		this.user = user;
 	}
 	
-
-
-	
-
 }

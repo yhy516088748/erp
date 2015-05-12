@@ -1,21 +1,18 @@
 package com.kjq.erp.actions;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import net.sf.json.JSONObject;
 
 import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.ParentPackage;
-import org.apache.struts2.convention.annotation.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.kjq.erp.dao.hibernate.PositionDao;
 import com.kjq.erp.model.Position;
+import com.kjq.erp.util.Response;
 import com.opensymphony.xwork2.ActionSupport;
 
 
-@ParentPackage("json-default")
 public class PositionAction extends ActionSupport{
 
 	/*
@@ -28,38 +25,33 @@ public class PositionAction extends ActionSupport{
 	@Autowired
 	private PositionDao positionDao;
 	
-	private Map<String, Object> root;
 	private String id;
 	
 
-	@Action(value = "getPositionInfo", results = {@Result(type = "json", params = {"root", "root"})})
-	public String getPositionInfo() throws IOException {
-		root = new HashMap<String, Object>();
-		
+	@Action(value = "getPositionInfo")
+	public void getPositionInfo() throws IOException {
+
+		JSONObject json = new JSONObject();
+
 		Position position = positionDao.get(id);
-		root.put("Status", "OK");
-		root.put("Info", position);
+		json.put("Status", "OK");
+		json.put("Info", position.toString());
 		
-		return SUCCESS;
+		Response response = new Response();
+		response.doResponse(json.toString());
 	}
 	
-	@Action(value = "getPositionList", results = {@Result(type = "json", params = {"root", "root"})})
-	public String getPositionList() throws IOException {
-		root = new HashMap<String, Object>();
-		
+	@Action(value = "getPositionList")
+	public void getPositionList() throws IOException {
+		JSONObject json = new JSONObject();
+
 		List<Position> positionList = positionDao.findByAll();
-		root.put("Status", "OK");
-		root.put("List", positionList);
+		json.put("Status", "OK");
+		json.put("List", positionList.toString());
 		
-		return SUCCESS;
-	}
-
-	public Map<String, Object> getRoot() {
-		return root;
-	}
-
-	public void setRoot(Map<String, Object> root) {
-		this.root = root;
+		Response response = new Response();
+		response.doResponse(json.toString());
+		
 	}
 
 	public String getId() {

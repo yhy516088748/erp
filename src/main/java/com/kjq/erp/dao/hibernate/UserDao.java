@@ -28,12 +28,12 @@ public class UserDao extends GenericDaoHibernate<User, String>{
 		return detachedCriteria;
 	}
 
-	public List findUserGroups(String uid){
-		String hql = "select user.groups from User user where user.id=?";
-		List list = getHibernateTemplate().find(hql,new Object[]{uid});
-		return list;
-	}
-	
+//	public List findUserGroups(String uid){
+//		String hql = "select user.groups from User user where user.id=?";
+//		List list = getHibernateTemplate().find(hql,new Object[]{uid});
+//		return list;
+//	}
+//	
 	public User findUserByLoginName(String name){
 		String hql = "from User user where upper(user.loginName)=?";
 		List list = getHibernateTemplate().find(hql,new Object[]{name});
@@ -45,16 +45,16 @@ public class UserDao extends GenericDaoHibernate<User, String>{
 	}
 	
 	public List findRolesByUserID(String uid){
-		String hql = "select gp.roles from User user inner join user.groups as gp where user.id=?";
+		String hql = "select roles from User user inner join user.roles as roles where user.id=?";
 		List list = getHibernateTemplate().find(hql,new Object[]{uid});
 		return list;
 	}
 	
-	public List findRolesByUserAndGroup(String uid,String gid){
-		String hql = "select gp.roles from User user inner join user.groups as gp where user.id=? and gp.id=?";
-		List list = getHibernateTemplate().find(hql,new Object[]{uid,gid});
-		return list;
-	}
+//	public List findRolesByUserAndGroup(String uid,String gid){
+//		String hql = "select gp.roles from User user inner join user.groups as gp where user.id=? and gp.id=?";
+//		List list = getHibernateTemplate().find(hql,new Object[]{uid,gid});
+//		return list;
+//	}
 	
 	public Group isGroupAssignedToUser(String uid,String gid){
 		String hql = "select gps from User user right join user.groups gps where user.id=? and gps.id = ?";

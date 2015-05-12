@@ -33,17 +33,14 @@ public class Signin extends UUIDEntity implements Serializable {
 //	private Date signinDate;
 	private Date signinTime;
 	private String siginType;	//1.上班，2.下班，3.加班申请，4，加班
-	private User user;
 	private String remark;
 
-//	@Column(name="signinDate")
-//	@Temporal(TemporalType.DATE)
-//	public Date getSigninDate() {
-//		return signinDate;
-//	}
-//	public void setSigninDate(Date signinDate) {
-//		this.signinDate = signinDate;
-//	}
+	private String publicIp;
+	private String localIp;
+	private String macAddress;
+	
+	private User user;
+
 	
 	@Column(name="signinTime")
 	public Date getSigninTime() {
@@ -75,6 +72,30 @@ public class Signin extends UUIDEntity implements Serializable {
 	}
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+
+	@Column(name="publicIp",length=15)
+	public String getPublicIp() {
+		return publicIp;
+	}
+	public void setPublicIp(String publicIp) {
+		this.publicIp = publicIp;
+	}
+
+	@Column(name="localIp",length=15)
+	public String getLocalIp() {
+		return localIp;
+	}
+	public void setLocalIp(String localIp) {
+		this.localIp = localIp;
+	}
+
+	@Column(name="macAddress",length=21)
+	public String getMacAddress() {
+		return macAddress;
+	}
+	public void setMacAddress(String macAddress) {
+		this.macAddress = macAddress;
 	}
 	
 	

@@ -37,6 +37,8 @@ public class User extends UUIDEntity implements Serializable {
 
 	private String loginName;// 登陆账号
 	private String password;// 登陆密码
+	private String iconUrl;
+	
 	private String name;// 员工编号
 	private String idNumber;// 员工姓名
 	private String gender;// 性别
@@ -60,20 +62,22 @@ public class User extends UUIDEntity implements Serializable {
 	private String education;// 学历
 	private String professional;// 专业
 
-	private Set<Group> groups;// 部门
-	private Position position;// 职务
 	private String workStartTime;// 标准上班时间
 	private String workEndTime;// 标准下班时间
 	private Date contractStartDate;// 合同起始日期
 	private Date contractEndDate;// 合同失效日期
 	private String remark;// 备注
+	private Date createTime;
+
+	private Set<Role> roles;// 部门
+	private Set<Department> departments;
+	private Set<Position> positions;//职务
 
 	private boolean enabled = true;
 	private boolean locked;
 	private Date expiryDate;
 	private Date passwordExpiryDate;
 
-	private Date createTime;
 
 	@Column(name = "loginName", length = 50)
 	public String getLoginName() {
@@ -99,57 +103,37 @@ public class User extends UUIDEntity implements Serializable {
 		this.password = password;
 	}
 
-	@Column(name = "email", length = 50)
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	@Column(name = "gender", length = 4)
-	public String getGender() {
-		return gender;
-	}
-	public void setGender(String gender) {
-		this.gender = gender;
-	}
-
-	@Column
-	@Temporal(TemporalType.DATE)
-	public Date getBirthday() {
-		return birthday;
-	}
-	public void setBirthday(Date birthday) {
-		this.birthday = birthday;
-	}
-
-	@Column(name = "phone", length = 30)
-	public String getPhone() {
-		return phone;
-	}
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-
-	@Column(name = "address", length = 200)
-	public String getAddress() {
-		return address;
-	}
-	public void setAddress(String address) {
-		this.address = address;
-	}
 
 	@ManyToMany
-	@JoinTable(name = "tb_user_group", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = @JoinColumn(name = "group_id"))
+	@JoinTable(name = "tb_user_department", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = @JoinColumn(name = "department_id"))
 	@JSON(serialize = false)
-	public Set<Group> getGroups() {
-		return groups;
+	public Set<Department> getDepartments() {
+		return departments;
 	}
-	public void setGroups(Set<Group> groups) {
-		this.groups = groups;
+	public void setDepartments(Set<Department> departments) {
+		this.departments = departments;
 	}
-
+	
+	@ManyToMany
+	@JoinTable(name = "tb_user_role", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = @JoinColumn(name = "role_id"))
+	@JSON(serialize = false)
+	public Set<Role> getRoles() {
+		return roles;
+	}
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
+	}
+	
+	@ManyToMany
+	@JoinTable(name = "tb_user_position", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = @JoinColumn(name = "position_id"))
+	@JSON(serialize = false)
+	public Set<Position> getPositions() {
+		return positions;
+	}
+	public void setPositions(Set<Position> positions) {
+		this.positions = positions;
+	}
+	
 	@Column
 	public boolean isEnabled() {
 		return enabled;
@@ -193,15 +177,48 @@ public class User extends UUIDEntity implements Serializable {
 		return (getExpiryDate() == null)
 				|| (getPasswordExpiryDate().compareTo(new Date()) > 0);
 	}
-	@ManyToOne(fetch = FetchType.LAZY)
-	@Fetch(FetchMode.JOIN)
-	public Position getPosition() {
-		return position;
+	
+	@Column(name = "email", length = 50)
+	public String getEmail() {
+		return email;
 	}
-	public void setPosition(Position position) {
-		this.position = position;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
+	@Column(name = "gender", length = 4)
+	public String getGender() {
+		return gender;
+	}
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	@Column
+	@Temporal(TemporalType.DATE)
+	public Date getBirthday() {
+		return birthday;
+	}
+	public void setBirthday(Date birthday) {
+		this.birthday = birthday;
+	}
+
+	@Column(name = "phone", length = 30)
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	@Column(name = "address", length = 200)
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	
 	@Column(name = "idNumber", length = 20)
 	public String getIdNumber() {
 		return idNumber;
@@ -292,7 +309,7 @@ public class User extends UUIDEntity implements Serializable {
 		this.remark = remark;
 	}
 
-	@Column(length = 19)
+	@Column
 	public Date getCreateTime() {
 		return createTime;
 	}
@@ -336,5 +353,11 @@ public class User extends UUIDEntity implements Serializable {
 	public void setIsChildInsurance(Boolean isChildInsurance) {
 		this.isChildInsurance = isChildInsurance;
 	}
-
+	@Column(name="iconUrl",length=200)
+	public String getIconUrl() {
+		return iconUrl;
+	}
+	public void setIconUrl(String iconUrl) {
+		this.iconUrl = iconUrl;
+	}
 }

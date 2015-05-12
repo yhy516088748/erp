@@ -6,6 +6,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
@@ -13,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.kjq.erp.dao.hibernate.MenuDao;
 import com.kjq.erp.model.Menu;
+import com.kjq.erp.model.Position;
+import com.kjq.erp.util.Response;
 import com.opensymphony.xwork2.ActionSupport;
 
 
@@ -35,26 +40,22 @@ public class MenuAction extends ActionSupport{
 	private MenuDao menuDao;
 	
 
-	private Map<String, Object> root;
 	private String id;
 
-	@Action(value="getMenuInfo",results = {@Result(type = "json", params = {
-			"root", "root"})})
-	public String getMenuInfo() throws IOException{
-		root = new HashMap<String, Object>();
-		
+	@Action(value="getMenuInfo")
+	public void getMenuInfo() throws IOException{
+		JSONObject json = new JSONObject();
+
 		Menu menu = menuDao.get(id);
-		
-		Map<String, String> map = new HashMap<String, String>();
+		JSONObject map = new JSONObject();
 		map.put("id", menu.getId());
 		map.put("title", menu.getTitle());
 		map.put("code", menu.getCode());
 		map.put("icon", menu.getIcon());
-		
-		List<Map<String, String>> childMenu = new ArrayList<Map<String, String>>();
+		JSONArray childMenu = new JSONArray();
 		List<Menu> childMenuList = menuDao.findChildMenus(menu);
 		for(Menu cm:childMenuList){
-			Map<String, String> m = new HashMap<String, String>();
+			JSONObject m = new JSONObject();
 			m.put("id", cm.getId());
 			m.put("title", cm.getTitle());
 			m.put("code", cm.getCode());
@@ -64,28 +65,31 @@ public class MenuAction extends ActionSupport{
 		if(childMenu.size() > 0){
 			map.put("childMenu", childMenu.toString());
 		}
-		root.put("Status", "OK");
-		root.put("Info", map);
-		return SUCCESS;
+		json.put("Status", "OK");
+		json.put("Info", map.toString());
+		
+		Response response = new Response();
+		response.doResponse(json.toString());
 	}
 	
-	@Action(value = "getMenuList", results = {@Result(type = "json", params = {
-			"root", "root"})})
-	public String getMenuList() throws IOException {
-		root = new HashMap<String, Object>();
-		List<Map<String, String>> menuList = new ArrayList<Map<String, String>>();
+	@Action(value = "getMenuList")
+	public void getMenuList() throws IOException {
+		
+		JSONObject json = new JSONObject();
+
+		JSONArray menuList = new JSONArray();
 		List<Menu> objs = menuDao.findParentMenus();
 		for(Menu menu:objs){
-			Map<String, String> map = new HashMap<String, String>();
+			JSONObject map = new JSONObject();
 			map.put("id", menu.getId());
 			map.put("title", menu.getTitle());
 			map.put("code", menu.getCode());
 			map.put("icon", menu.getIcon());
 			
-			List<Map<String, String>> childMenu = new ArrayList<Map<String, String>>();
+			JSONArray childMenu = new JSONArray();
 			List<Menu> childMenuList = menuDao.findChildMenus(menu);
 			for(Menu cm:childMenuList){
-				Map<String, String> m = new HashMap<String, String>();
+				JSONObject m = new JSONObject();
 				m.put("id", cm.getId());
 				m.put("title", cm.getTitle());
 				m.put("code", cm.getCode());
@@ -97,18 +101,11 @@ public class MenuAction extends ActionSupport{
 			}
 			menuList.add(map);
 		}
-		root.put("Status", "OK");
-		root.put("List", menuList);
-		return SUCCESS;
-
-	}
-
-	public Map<String, Object> getRoot() {
-		return root;
-	}
-
-	public void setRoot(Map<String, Object> root) {
-		this.root = root;
+		json.put("Status", "OK");
+		json.put("List", menuList.toString());
+		
+		Response response = new Response();
+		response.doResponse(json.toString());
 	}
 
 	public String getId() {

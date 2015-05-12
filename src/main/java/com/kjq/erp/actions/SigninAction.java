@@ -1,29 +1,21 @@
 package com.kjq.erp.actions;
 
 import java.io.IOException;
-import java.sql.Time;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import net.sf.json.JSONObject;
 
 import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.ParentPackage;
-import org.apache.struts2.convention.annotation.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.kjq.erp.dao.hibernate.SigninDao;
 import com.kjq.erp.ext.spring.security.UserAdapter;
 import com.kjq.erp.model.Signin;
+import com.kjq.erp.util.Response;
 import com.opensymphony.xwork2.ActionSupport;
 
 
-@ParentPackage("json-default")
 public class SigninAction extends ActionSupport{
 
 	
@@ -40,47 +32,52 @@ public class SigninAction extends ActionSupport{
 	private SigninDao signinDao;
 	
 	private Date signidDate;
-	private Map<String, Object> root;
 	
-	@Action(value = "getSigninTypeList", results = {@Result(type = "json", params = {"root", "root"})})
-	public String getSigninTypeList() throws IOException{
-		root = new HashMap<String, Object>();
-		Object[] list = {"上班","下班","加班申请","加班"};
-		root.put("Status", "OK");
-		root.put("List", list);
-		return SUCCESS;
+	@Action(value = "getSigninTypeList")
+	public void getSigninTypeList() throws IOException{
+		JSONObject json = new JSONObject();
+		String[] list = {"上班","下班","加班申请","加班"};
+		json.put("Status", "OK");
+		json.put("List", list.toString());
+		Response response = new Response();
+		response.doResponse(json.toString());
 	}
 
-	@Action(value = "getSigninDay", results = {@Result(type = "json", params = {"root", "root"})})
-	public String getSigninDay() throws IOException{
-		root = new HashMap<String, Object>();
+	@Action(value = "getSigninDay")
+	public void getSigninDay() throws IOException{
+		JSONObject json = new JSONObject();
+
 		UserAdapter ua = (UserAdapter) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Date today = new Date();
-		List<?> list = signinDao.getSigninByDayByUser(today,ua.getUser().getId());
+		List<Signin> list = signinDao.getSigninByDayByUser(today,ua.getUser().getId());
 		
-		root.put("Status", "OK");
-		root.put("List", list);
+		json.put("Status", "OK");
+		json.put("List", list.toString());
 		
-		return SUCCESS;
+		Response response = new Response();
+		response.doResponse(json.toString());
 	}
 	
-	@Action(value = "getSigninMonth", results = {@Result(type = "json", params = {"root", "root"})})
-	public String getSigninMonth() throws IOException{
-		root = new HashMap<String, Object>();
+	@Action(value = "getSigninMonth")
+	public void getSigninMonth() throws IOException{
+		JSONObject json = new JSONObject();
+
 		UserAdapter ua = (UserAdapter) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Date today = new Date();
-		List<?> list = signinDao.getSigninByMonthByUser(today,ua.getUser().getId());
+		List<Signin> list = signinDao.getSigninByMonthByUser(today,ua.getUser().getId());
 		
-		root.put("Status", "OK");
-		root.put("List", list);
+		json.put("Status", "OK");
+		json.put("List", list.toString());
 		
-		return SUCCESS;
+		Response response = new Response();
+		response.doResponse(json.toString());
 	}
 
-	@Action(value = "addSigninDay", results = {@Result(type = "json", params = {"root", "root"})})
-	public String addSigninDay() throws IOException{
+	@Action(value = "addSigninDay")
+	public void addSigninDay() throws IOException{
+		JSONObject json = new JSONObject();
+
 		Date today = new Date();
-		root = new HashMap<String, Object>();
 		UserAdapter ua = (UserAdapter) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		
 		Signin signin = new Signin();
@@ -88,12 +85,11 @@ public class SigninAction extends ActionSupport{
 		signin.setSigninTime(today);
 		signin.setRemark("remarkreamrk");
 		signin.setUser(ua.getUser());
-		
 		signinDao.save(signin);
 		
-		root.put("Status", "OK");
-		
-		return SUCCESS;
+		json.put("Status", "OK");
+		Response response = new Response();
+		response.doResponse(json.toString());
 	}
 	
 //	@Action(value = "updateSignin", results = {@Result(type = "json", params = {"root", "root"})})
@@ -125,12 +121,5 @@ public class SigninAction extends ActionSupport{
 		this.signidDate = signidDate;
 	}
 
-	public Map<String, Object> getRoot() {
-		return root;
-	}
-
-	public void setRoot(Map<String, Object> root) {
-		this.root = root;
-	}
 	
 }

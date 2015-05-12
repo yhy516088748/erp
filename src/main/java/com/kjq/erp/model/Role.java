@@ -25,7 +25,8 @@ public class Role extends UUIDEntity implements Serializable{
 	private String code;									// 权限代码
 	private String name;								// 权限名称
 
-	private Set<Group> groups;					// 所属组
+//	private Set<Group> groups;					// 所属组
+	private Set<User> users;
 
 	@Column
 	public String getCode() {
@@ -42,17 +43,30 @@ public class Role extends UUIDEntity implements Serializable{
 	public void setName(String name) {
 		this.name = name;
 	}
-
+	
 	@ManyToMany
 	@JoinTable(
-            name = "tb_group_role",
+            name = "tb_user_role",
             joinColumns = { @JoinColumn(name = "role_id") },
-            inverseJoinColumns = @JoinColumn(name = "group_id")
+            inverseJoinColumns = @JoinColumn(name = "user_id")
     )
-	public Set<Group> getGroups() {
-		return groups;
+	public Set<User> getUsers() {
+		return users;
 	}
-	public void setGroups(Set<Group> groups) {
-		this.groups = groups;
+	public void setUsers(Set<User> users) {
+		this.users = users;
 	}
+
+//	@ManyToMany
+//	@JoinTable(
+//            name = "tb_group_role",
+//            joinColumns = { @JoinColumn(name = "role_id") },
+//            inverseJoinColumns = @JoinColumn(name = "group_id")
+//    )
+//	public Set<Group> getGroups() {
+//		return groups;
+//	}
+//	public void setGroups(Set<Group> groups) {
+//		this.groups = groups;
+//	}
 }

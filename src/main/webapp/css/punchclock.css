@@ -7,5 +7,18 @@
 }
 
 .punch-clock-body-child{
+    position: relative;
     margin-bottom: 10px;
+    overflow: hidden;
+}
+
+.user-manager-body{
+    padding: 10px;
+    text-align: center;
+}
+
+.user-manager-body-child{
+    position: relative;
+    margin-bottom: 10px;
+    overflow: hidden;
 }

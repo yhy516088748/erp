@@ -5,21 +5,11 @@
 /* 各种初始化 */
 $(function () {
     /* 通过ajax 获取 直观数据 */
-	var request = $.ajax({
-	    url : "/erp/getUserList.do",
-	    type : "GET",
-	    dataType : "json",
-	    contentType : "json",
-	    success : function(List){
-	        console.log(List);
-	    },
-	    async : false
-	});
-	console.log($.parseJSON(request.responseText));
-
     userObj = {
+        userid : 1,
         /* 用户信息 */
         user : {
+
             specifiedTime : ["08:30:00","17:00:00"],
             realTime : ["08:30:00","17:00:00"],
             flag : true
@@ -43,10 +33,13 @@ $(function () {
                 ],
                 gsgl: [
                     {title: "部门", module: "bm"},
+                ],
+                rygl :[
+                    {title : "用户管理",module : "UserManager"}
                 ]
             }
         },
-        defaultModule : "PunchClock"
+        defaultModule : "UserInfo"
     }
     /* 放置各种 全局物品 */
 
@@ -70,5 +63,7 @@ $(function () {
     //message.start();
 
     /* 默认模块 */
-    new window[userObj.defaultModule]($("#content-container"));
+    //new window[userObj.defaultModule]($("#content-container"));
+    var userInfo = new UserInfo($("#content-container"));
+    userInfo.setData();
 })

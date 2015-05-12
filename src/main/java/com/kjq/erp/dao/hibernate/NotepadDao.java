@@ -5,14 +5,14 @@ import java.util.Map;
 import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.stereotype.Repository;
 
-import com.kjq.erp.model.NotePad;
+import com.kjq.erp.model.Notepad;
 
-@Repository("notePadDao")
-public class NotePadDao extends GenericDaoHibernate<NotePad, String> {
+@Repository("notepadDao")
+public class NotepadDao extends GenericDaoHibernate<Notepad, String> {
 	@Override
 	public DetachedCriteria getCriteria(Map filterMap) {
 		DetachedCriteria detachedCriteria = DetachedCriteria
-				.forClass(NotePad.class);
+				.forClass(Notepad.class);
 		return detachedCriteria;
 	}
 	

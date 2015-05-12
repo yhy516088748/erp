@@ -5,10 +5,23 @@ Calendar = function (parentObj) {
         console.log("calendar's parentObj is not jQuery");
         return;
     }
+
     this.parentObj = parentObj;
+
+    /* 计算工作日 */
+    this.workDays = new Array();
+
+    /* 计算休息日 */
+    this.unWorkDays = new Array();
 
     /* 当日的数据 放置处 */
     this.nowDay = null;
+
+    /* msg 延迟时间 */
+    this.msgDelay = 1800;
+
+    /* 单击的是某天 */
+    this.clickDay = null;
 
     this.init();
 }
@@ -17,73 +30,58 @@ Calendar.prototype = {
     init: function () {
         /* 创建一个日历 */
         this.createCalendar();
-        this.initData();
     },
     /* 通过每日数据 对 整个 Calendar 进行上下班 加班 颜色的变化 */
-    initData: function (dataObj) {
-        this.dataObj = dataObj = {
-            specifiedTime: ["08:30", "17:00"],
-            days: [{
-                realTime: ["08:30", "17:00"], flag: false
-            }, {
-                realTime: ["08:30", "17:00"], flag: false, dayWhat: "字符串"
-            }, {
-                realTime: ["08:30", "17:00"], flag: true, dayWhat: "字符串"
-            }, {
+    setData: function (dataObj) {
+        this.dataObj = dataObj;
 
-            }, {
+        /* 所有日期数据 */
+        this.days = days = dataObj.days;
 
-            }, {
-                realTime: ["08:30", "17:00"], flag: true
-            }, {
-                realTime: ["08:30", "17:00"], flag: false
-            }, {
-                realTime: ["08:30", "17:00"], flag: false, dayWhat: "字符串"
-            }, {
-                realTime: ["08:30", "17:00"], flag: true, dayWhat: "字符串"
-            }, {
-                realTime: ["08:30", "17:00"], flag: false, dayWhat: "字符串"
-            }, {
-
-            }, {
-
-            }, {
-                realTime: ["08:30", "17:00"], flag: false
-            }, {
-                realTime: ["08:30", "17:00"], flag: false, dayWhat: "字符串"
-            }, {
-                realTime: ["08:30", "17:00"], flag: true, dayWhat: "字符串"
-            }, {
-                realTime: ["08:30", "17:00"], flag: false, dayWhat: "字符串"
-            }, {
-                realTime: ["08:30", "17:00"], flag: false, dayWhat: "字符串"
-            }, {
-
-            }, {
-
-            }, {
-                realTime: ["08:30", "17:00"], flag: false, dayWhat: "字符串"
-            }, {
-                realTime: ["08:30", "17:00"], flag: true, dayWhat: "字符串"
-            }, {
-                realTime: ["08:30", "17:00"], flag: false, dayWhat: "字符串"
-            }, {
-                realTime: ["08:30", "17:00"], flag: false, dayWhat: "字符串"
-            }, {
-                realTime: ["08:30", "17:00"], flag: true
-            }, {
-                realTime: ["08:30", "17:00"], flag: false
-            }, {
-
-            }]
-        }
-        var days = dataObj.days;
         for (var i = 0; i < days.length; i++) {
             var dayData = days[i];
             var dayNum = i + 1;
             this.setDay(dayData, dayNum);
         }
+        /* 对数据进行统计 去除周末 */
+        //var str = "";
+        ///* 计算周末加班天数 */
+        //var unWorkNum = 0;
+        //var newDays = days;
+        //for (var i = 0 ; i < this.unWorkDays.length ; i++){
+        //    if (newDays[this.unWorkDays[i] - 1].realTime){
+        //        unWorkNum ++ ;
+        //        newDays[this.unWorkDays[i] - 1] = {};
+        //    }
+        //}
+        //
+        //if( unWorkNum > 0){
+        //    str = str + "周末上班:" + unWorkNum + "天 ";
+        //}
+        //
+        ///* 计算正常工作天数 */
+        //
+        //var workNum = 0;
+        //for (var i = 0 ; i < this.workDays.length ; i++){
+        //    if (newDays[this.workDays[i] - 1]){
+        //        if (newDays[this.workDays[i] - 1].realTime){
+        //            workNum ++ ;
+        //            newDays[this.workDays[i] - 1] = {};
+        //        }
+        //    }
+        //}
+        //
+        //if (workNum > 0){
+        //    if( workNum > 0){
+        //        str = str + "正常上班:" + workNum + "天 ";
+        //    }
+        //}
+        ///* 计算剩余工作天数 */
+        //
+        //str = str + "剩余天数:" + (this.workDays.length - workNum) + "天 ";
+        //this.footInfo.text(str);
     },
+
     /* 创建日历 只有默认为当年当月*/
     createCalendar: function () {
         this.calendar = calendar = $("<div class='calendar'/>");
@@ -133,6 +131,9 @@ Calendar.prototype = {
                 that.nowDay = obj;
                 that.setDay(that.nowDay);
                 that.calendar.find("#calendar-morning").addClass("bdcolor-bottom-blue").text("上班:" + str);
+                util.successMsg("签到成功",that.msgDelay);
+            }else{
+                util.errMsg("签到失败",that.msgDelay);
             }
         })
         /* 申请按钮 */
@@ -146,17 +147,23 @@ Calendar.prototype = {
                 var d = that.createSubmit("申请加班原因：【请如实填写】",function (text) {
                     /* text 为提交的信息 */
                     console.log(text);
-                    that.nowDayFlag = true;
+                    if (text){
+                        that.nowDayFlag = true;
+                        util.successMsg("加班申请成功提交",that.msgDelay);
+                    }else{
+                        util.errMsg("数据为空",that.msgDelay);
+                    }
                 });
                 conform.setBody(d);
                 conform.show("moveFromTopFade");
             });
         /* 签退按钮 */
-        $("<button />").addClass("btn btn-right-radius bgcolor-orange").text("签退").appendTo(control).click(function(){
+        $("<button />").addClass("btn btn-right-radius bgcolor-green").text("签退").appendTo(control).click(function(){
             var t = timer.getTimer();
             var str = util.addZero(t.h,2) + ":" + util.addZero(t.m,2);
             if (that.nowDay){
                 if (that.nowDay.realTime.length == 2){
+                    util.errMsg("签退失败",that.msgDelay);
                     return;
                 }
                 that.nowDay.realTime[1] = str;
@@ -168,6 +175,9 @@ Calendar.prototype = {
                 }else{
                     that.calendar.find("#calendar-afternoon").addClass("bdcolor-bottom-orange").text("下班:" + str);
                 }
+                util.successMsg("签退成功",that.msgDelay);
+            }else{
+                util.errMsg("签退失败",that.msgDelay);
             }
         });
 
@@ -197,7 +207,7 @@ Calendar.prototype = {
         var ul = $("<ul />").appendTo(control);
         /* 信息统计 */
         var li = $("<li />");
-        $("<span />").addClass("value").text("正常上班：19天 剩余天数：4天").appendTo(li);
+        this.footInfo = $("<span />").addClass("value").appendTo(li);
         li.appendTo(ul);
     },
     /* 添加 增加备注的按钮 */
@@ -205,9 +215,15 @@ Calendar.prototype = {
         var add = $("<span class='date-add icon-add-circle'>");
         var that = this;
         add.click(function () {
-                var d = that.createSubmit("日程备注：",function (text) {
+                var d = that.createSubmit("日程备注：【请如实填写】",function (text) {
                     /* text 为提交的信息 */
-                    console.log(text);
+                    if (text){
+                        that.setDay({dayWhat : text},that.clickDay);
+                        util.successMsg("日程备注成功提交",that.msgDelay);
+                    }else{
+                        util.errMsg("数据为空",that.msgDelay);
+                    }
+
                 });
                 conform.setBody(d);
                 conform.show("moveFromTopFade");
@@ -223,11 +239,20 @@ Calendar.prototype = {
         if (!dayNum){
             dayNum = this.dateNow.data("day");
         }
+
+        var day = this.calendar.find("[day=" + dayNum + "]");
+
+
+        /* 设置日程 */
+        if (dayData.dayWhat) {
+            day.find(".date-what").addClass("show");
+        }
+
         /* 设置 某一天 的数据 */
         if (!dayData.realTime){
             return;
         }
-        var day = this.calendar.find("[day=" + dayNum + "]");
+
         /* 对数据进行赋值 */
         var lis = day.find("ul li");
         /* 判定是否为加班 */
@@ -239,13 +264,8 @@ Calendar.prototype = {
         } else {
             if (dayData.flag != null){
                 //lis[1] // 下班
-                $(lis[1]).addClass("bgcolor-orange").find("span").text("下:" + dayData.realTime[1]);  // 下班
+                $(lis[1]).addClass("bgcolor-green").find("span").text("下:" + dayData.realTime[1]);  // 下班
             }
-        }
-
-        /* 设置日程 */
-        if (dayData.dayWhat) {
-            day.find(".date-what").addClass("show");
         }
     },
     /* 创建日历的title 部分 */
@@ -279,9 +299,11 @@ Calendar.prototype = {
     },
     setHoverEvent: function () {
         /* 增加click 之后的样式CSS */
+        var that = this;
         this.calendar.find(".date").click(function () {
             $(".date").removeClass("date-hover");
             $(this).addClass("date-hover");
+            that.clickDay = $(this).attr("day");
         });
     },
     setNow: function () {
@@ -293,6 +315,8 @@ Calendar.prototype = {
             var obj = $(month[i]);
             if (obj.attr("day") == nowDay) {
                 this.dateNow.data("day",nowDay);
+                obj.addClass("date-hover");
+                this.clickDay = nowDay;
                 this.dateNow.appendTo(obj);
                 return;
             }
@@ -342,6 +366,7 @@ Calendar.prototype = {
         for (i = this.firstnumber; i < 7; i++) {
             var id = year + "-" + month + "-" + this.day;
             this.createTd(this.createDay(this.day)).attr("id", id).appendTo(tr);
+            this.calWorkDay(i,this.day);
             this.day++;
         }
         tr.appendTo(parent);
@@ -351,10 +376,13 @@ Calendar.prototype = {
         for (i = 0; i < this.weeknumber; i++)//其他星期
         {
             var tr = this.createTr();
+            var num = 0;
             for (var k = this.daynumber - (7 - this.firstnumber) - (this.weeknumber - 1) * 7; k < this.daynumber - (7 - this.firstnumber) - (this.weeknumber - 1) * 7 + 7; k++) {
                 var id = year + "-" + month + "-" + this.day;
                 this.createTd(this.createDay(this.day)).attr("id", id).appendTo(tr);
+                this.calWorkDay(num,this.day);
                 this.day++;
+                num ++;
             }
             this.number++;
             tr.appendTo(parent);
@@ -367,6 +395,7 @@ Calendar.prototype = {
         {
             var id = year + "-" + month + "-" + this.day;
             this.createTd(this.createDay(this.day)).attr("id", id).appendTo(tr);
+            this.calWorkDay(i,this.day);
             this.day++;
         }
         for (i = lastnumber + 1; i < 7; i++) {
@@ -413,5 +442,12 @@ Calendar.prototype = {
             callback(text.val());
         });
         return $div;
+    },
+    calWorkDay  : function(num,day){
+        if (num == 6 || num == 0){
+            this.unWorkDays.push(day);
+        }else{
+            this.workDays.push(day);
+        }
     }
 }

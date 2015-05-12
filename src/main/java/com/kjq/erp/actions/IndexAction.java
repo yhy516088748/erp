@@ -1,14 +1,21 @@
 package com.kjq.erp.actions;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 
+import com.kjq.erp.model.Menu;
+import com.kjq.erp.util.Response;
 import com.opensymphony.xwork2.ActionSupport;
 
 /**
@@ -17,11 +24,9 @@ import com.opensymphony.xwork2.ActionSupport;
  * @author York
  * 
  */
-@ParentPackage("json-default")
 public class IndexAction extends ActionSupport {
 
 	private static final long serialVersionUID = -1490269001809860571L;
-	private Map root;
 
 	@Action(value = "index", results = {@Result(name = "success", location = "index.html")})
 	public String index() {
@@ -29,27 +34,18 @@ public class IndexAction extends ActionSupport {
 	}
 	
 
-	@Action(value = "getToday", results = {@Result(type = "json", params = {"root", "root"})})
-	public String getToday(){
+	@Action(value = "getToday")
+	public void getToday() throws IOException{
+		JSONObject json = new JSONObject();
+
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		SimpleDateFormat sdft = new SimpleDateFormat("HH:mm");
 		
 		Date today = new Date();
-		root = new HashMap();
-		root.put("today", sdf.format(today));
-		root.put("time", sdft.format(today));
+		json.put("today", sdf.format(today));
+		json.put("time", sdft.format(today));
 		
-		return "success";
+		Response response = new Response();
+		response.doResponse(json.toString());
 	}
-	
-
-	public Map getRoot() {
-		return root;
-	}
-
-
-	public void setRoot(Map root) {
-		this.root = root;
-	}
-	
 }

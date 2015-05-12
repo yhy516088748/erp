@@ -36,11 +36,15 @@ public class UserAdapter implements UserDetails, Serializable {
 
 	private void buildAuthorities() {
 		Set<RoleAdapter> authorities = new HashSet<RoleAdapter>();
-		for (Group group : this.user.getGroups()) {
-			for (Role role : group.getRoles()) {
-				authorities.add(new RoleAdapter(role));
-			}
+		for (Role role:this.user.getRoles()){
+			System.out.println(role.getCode());
+			authorities.add(new RoleAdapter(role));
 		}
+//		for (Group group : this.user.getGroups()) {
+//			for (Role role : group.getRoles()) {
+//				authorities.add(new RoleAdapter(role));
+//			}
+//		}
 		this.cachedAuthorities = authorities;
 	}
 	

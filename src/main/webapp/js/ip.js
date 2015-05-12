@@ -76,10 +76,9 @@ var createIp = function (ip) {
 }
 
 function getIp() {
+    createIp(myip);
 
     getIPs(function (ip) {
         createIp(ip);
     });
-
-    //createIp(myip);
 }

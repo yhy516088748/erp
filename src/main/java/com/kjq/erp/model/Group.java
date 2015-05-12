@@ -28,7 +28,7 @@ public class Group extends UUIDEntity implements Serializable
 
 	private Set<User> users;					// 所属用户
 	private Set<Role> roles;					// 所属权限
-	private Set<Menu> menus = new HashSet<Menu>();
+//	private Set<Menu> menus = new HashSet<Menu>();
 
 	@Column
 	public String getName() {
@@ -64,16 +64,4 @@ public class Group extends UUIDEntity implements Serializable
 		this.roles = roles;
 	}
 	
-	@ManyToMany
-	@JoinTable(
-            name = "tb_group_menu",
-            joinColumns = { @JoinColumn(name = "group_id") },
-            inverseJoinColumns = @JoinColumn(name = "menu_id")
-    )
-	public Set<Menu> getMenus() {
-		return menus;
-	}
-	public void setMenus(Set<Menu> menus) {
-		this.menus = menus;
-	}
 }

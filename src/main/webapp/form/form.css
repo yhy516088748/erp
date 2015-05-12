@@ -1,3 +1,10 @@
+.controls [class*="span"]{
+    margin-left: 0;
+}
+
+.controls button{
+    margin-right: 3px;
+}
 
 .btn,.text{
     font-size: 16px;
@@ -49,3 +56,12 @@ textarea{
     text-align: left;
     display: block;
 }
+
+
+@media screen and (max-width: 767px) {
+    .controls button{
+        width: 100%;
+    }
+}
+
+

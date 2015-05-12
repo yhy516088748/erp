@@ -50,8 +50,8 @@
 
 @media screen and (max-width:767px){
     .conform-body{
-        width: 94%;
-        margin-left: 3%;
+        width: 90%;
+        margin-left: 5%;
         border-radius: 5px;
         box-sizing: border-box;
         -moz-box-sizing: border-box;
