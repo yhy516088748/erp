@@ -27,64 +27,22 @@ import com.kjq.erp.util.UUIDEntity;
  */
 @Entity
 @Table(name = "tb_menu")
-public class Menu extends UUIDEntity implements Serializable,Comparable{
-	/**
-	 * 
-	 */
+public class Menu extends UUIDEntity implements Serializable{
 	private static final long serialVersionUID = -7099112915257658653L;
-	/**
-	 * 排序
-	 */
-    private Integer seq;
-    /**
-     * 菜单标题
-     */
-    private String title;
-    /**
-     * 菜单标题-英文
-     */
-    private String enTitle;
-    /**
-     * 菜单提示
-     */
-    private String tip;
-    /**
-     * 菜单图标
-     */
-    private String icon;
-    /**
-     * 菜单图标
-     */
-    private String code;
-    /**
-     * 菜单链接
-     */
-    private String url;
-    /**
-     * 如果是父级菜单，可设置默认子级菜单链接
-     * 用于左右frame的框架结构中
-     */
-    private String defaultSubUrl;
-    /**
-     * 链接的target属性
-     */
-    private String target;
-    /**
-     * 上级菜单
-     */
-    private Menu parent;
-    /**
-     * 是否是叶子结点
-     */
-    private boolean leaf;
-    /**
-     * 是否顶级接点
-     */
-    private boolean top;
+	
+    private Integer seq;	//排序
+    private String title;//标题
+    private String enTitle;//英文标题
+    private String tip;//提示
+    private String icon;//图标
+    private String code;//code
+    private String default_code;
+    private String url;//连接
+    private Menu parent;//上级菜单
     /**
      * 子菜单
      */
-    private Set<Menu> childMenu = new HashSet(0);
+    private Set<Menu> childMenu = new HashSet(0);//子菜单
     
     @Column(name="seq")
 	public Integer getSeq() {
@@ -126,6 +84,14 @@ public class Menu extends UUIDEntity implements Serializable,Comparable{
 	public void setCode(String code) {
 		this.code = code;
 	}
+
+	@Column(name="default_code",length=100)
+	public String getDefault_code() {
+		return default_code;
+	}
+	public void setDefault_code(String default_code) {
+		this.default_code = default_code;
+	}	
 	
 	@Column(name="url",length=100)
 	public String getUrl() {
@@ -134,15 +100,6 @@ public class Menu extends UUIDEntity implements Serializable,Comparable{
 	public void setUrl(String url) {
 		this.url = url;
 	}
-	
-	@Column(name="target",length=10)
-	public String getTarget() {
-		return target;
-	}
-	public void setTarget(String target) {
-		this.target = target;
-	}
-
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@Fetch(FetchMode.JOIN)
@@ -154,36 +111,12 @@ public class Menu extends UUIDEntity implements Serializable,Comparable{
 		this.parent = parent;
 	}
 	
-	@Transient
-	public boolean isLeaf() {
-		return leaf;
-	}
-	public void setLeaf(boolean leaf) {
-		this.leaf = leaf;
-	}
-	
-	@Transient
-	public boolean isTop() {
-		return top;
-	}
-	public void setTop(boolean top) {
-		this.top = top;
-	}
-
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="parent")
 	public Set<Menu> getChildMenu() {
 		return childMenu;
 	}
 	public void setChildMenu(Set<Menu> childMenu) {
 		this.childMenu = childMenu;
-	}
-	
-	@Column(name="default_sub_url",length=100)
-	public String getDefaultSubUrl() {
-		return defaultSubUrl;
-	}
-	public void setDefaultSubUrl(String defaultSubUrl) {
-		this.defaultSubUrl = defaultSubUrl;
 	}
 	
 	@Column(name="en_title",length=50)
@@ -204,5 +137,5 @@ public class Menu extends UUIDEntity implements Serializable,Comparable{
 			return 1;
 		}
 		return ((Menu)o).getSeq().compareTo(this.getSeq());
-	}	
+	}
 }

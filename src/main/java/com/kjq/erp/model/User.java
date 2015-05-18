@@ -49,6 +49,8 @@ public class User extends UUIDEntity implements Serializable {
 	private String zipCode;// 邮编
 	private String nativePlace;// 籍贯
 
+	private String bankNumber;//银行账号
+	private String bankName;//开户行名称
 	private String gjjAccount;// 公积金账号
 	private String sbAccount;// 社保账号
 	private String workYear;// 参加工作年
@@ -69,8 +71,8 @@ public class User extends UUIDEntity implements Serializable {
 	private String remark;// 备注
 	private Date createTime;
 
-	private Set<Role> roles;// 部门
-	private Set<Department> departments;
+	private Set<Role> roles;//角色
+	private Set<Department> departments;// 部门
 	private Set<Position> positions;//职务
 
 	private boolean enabled = true;
@@ -134,7 +136,7 @@ public class User extends UUIDEntity implements Serializable {
 		this.positions = positions;
 	}
 	
-	@Column
+	@Column(columnDefinition="INT default 1")
 	public boolean isEnabled() {
 		return enabled;
 	}
@@ -142,7 +144,7 @@ public class User extends UUIDEntity implements Serializable {
 		this.enabled = enabled;
 	}
 
-	@Column
+	@Column(columnDefinition="INT default 0")
 	public boolean isLocked() {
 		return locked;
 	}
@@ -243,6 +245,20 @@ public class User extends UUIDEntity implements Serializable {
 		this.nativePlace = nativePlace;
 	}
 
+	@Column(name="bankNumber",length=100)
+	public String getBankNumber() {
+		return bankNumber;
+	}
+	public void setBankNumber(String bankNumber) {
+		this.bankNumber = bankNumber;
+	}
+	@Column(name="bankName",length=50)
+	public String getBankName() {
+		return bankName;
+	}
+	public void setBankName(String bankName) {
+		this.bankName = bankName;
+	}
 	@Column(name = "gjjAccount", length = 20)
 	public String getGjjAccount() {
 		return gjjAccount;
@@ -323,30 +339,35 @@ public class User extends UUIDEntity implements Serializable {
 	public void setWorkYear(String workYear) {
 		this.workYear = workYear;
 	}
+	@Column(columnDefinition="INT default 0")
 	public Boolean getIsMarry() {
 		return isMarry;
 	}
 	public void setIsMarry(Boolean isMarry) {
 		this.isMarry = isMarry;
 	}
+	@Column(columnDefinition="INT default 0")
 	public Boolean getIsInsurance() {
 		return isInsurance;
 	}
 	public void setIsInsurance(Boolean isInsurance) {
 		this.isInsurance = isInsurance;
 	}
+	@Column(columnDefinition="INT default 0")
 	public Boolean getIsPOInsurance() {
 		return isPOInsurance;
 	}
 	public void setIsPOInsurance(Boolean isPOInsurance) {
 		this.isPOInsurance = isPOInsurance;
 	}
+	@Column(columnDefinition="INT default 0")
 	public Boolean getIsChild() {
 		return isChild;
 	}
 	public void setIsChild(Boolean isChild) {
 		this.isChild = isChild;
 	}
+	@Column(columnDefinition="INT default 0")
 	public Boolean getIsChildInsurance() {
 		return isChildInsurance;
 	}

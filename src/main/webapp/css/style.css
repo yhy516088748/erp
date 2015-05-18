@@ -38,10 +38,14 @@ body {
 }
 
 .content {
-    margin-bottom: 30px;
+    margin-bottom: 15px;
     padding-right: 1px;
 }
 
+.content-main{
+    overflow: hidden;
+    position: relative;
+}
 /* 附属 */
 img {
     border: 0 none;
@@ -238,7 +242,7 @@ ul.unstyle{
     visibility: hidden;
     overflow: hidden;
     left: 50%;
-    top: 50%;
+    top: 40%;
     z-index: 996;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -294,7 +298,6 @@ ul.unstyle{
 
 .profile-classic{
     position: relative;
-    margin-top: 5px;
 }
 
 .profile-classic li:first-child {
@@ -308,7 +311,7 @@ ul.unstyle{
 }
 
 .profile-classic img {
-    margin-bottom: 15px;
+
 }
 
 .profile-classic li span {
@@ -326,7 +329,7 @@ ul.unstyle{
     padding: 0 9px;
     position: absolute;
     right: 0;
-    top: 0;
+    top: 8px;
 }
 
 .profile-info h1 {

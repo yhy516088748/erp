@@ -2,6 +2,8 @@ package com.kjq.erp.actions;
 
 import java.io.IOException;
 import java.util.List;
+
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.apache.struts2.convention.annotation.Action;
@@ -45,9 +47,17 @@ public class PositionAction extends ActionSupport{
 	public void getPositionList() throws IOException {
 		JSONObject json = new JSONObject();
 
+		JSONArray list = new JSONArray();
 		List<Position> positionList = positionDao.findByAll();
+		for(Position position:positionList){
+			JSONObject obj = new JSONObject();
+			obj.put("id", position.getId());
+			obj.put("code", position.getCode());
+			obj.put("name", position.getName());
+			list.add(obj.toString());
+		}
 		json.put("Status", "OK");
-		json.put("List", positionList.toString());
+		json.put("List", list.toString());
 		
 		Response response = new Response();
 		response.doResponse(json.toString());

@@ -1,69 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans:beans xmlns="http://www.springframework.org/schema/security"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:beans="http://www.springframework.org/schema/beans"
-    xmlns:context="http://www.springframework.org/schema/context" 
+	xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
 	          http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
               http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd">
-	
-    <context:annotation-config/>
 
-    <context:component-scan base-package="com.kjq.erp.ext"/>
-	
-	<http pattern="/calendar/**" security="none"/>
-	<http pattern="/conform/**" security="none"/>
-	<http pattern="/css/**" security="none"/>
-	<http pattern="/form/**" security="none"/>
-	<http pattern="/img/**" security="none"/>
-	<http pattern="/js/**" security="none"/>
-	<http pattern="/message/**" security="none"/>
-	<http pattern="/nav/**" security="none"/>
-	<http pattern="/other/**" security="none"/>
-	<http pattern="/portlet/**" security="none"/>
-	 
+	<context:annotation-config />
+
+	<context:component-scan base-package="com.kjq.erp.ext" />
+
+	<http pattern="/calendar/**" security="none" />
+	<http pattern="/conform/**" security="none" />
+	<http pattern="/css/**" security="none" />
+	<http pattern="/form/**" security="none" />
+	<http pattern="/img/**" security="none" />
+	<http pattern="/js/**" security="none" />
+	<http pattern="/message/**" security="none" />
+	<http pattern="/nav/**" security="none" />
+	<http pattern="/other/**" security="none" />
+	<http pattern="/portlet/**" security="none" />
+
 	<http auto-config="true" realm="kjq-erp">
-		
-		<intercept-url pattern="/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
-		<!-- <intercept-url pattern="/login.do*" access="IS_AUTHENTICATED_ANONYMOUSLY" />
-		<intercept-url pattern="/**" access="ROLE_USER" /> -->
-		<!-- 
-		<intercept-url pattern="/**" access="ROLE_admin" />
-		 -->
-		
-		 
+
+		<!-- <intercept-url pattern="/**" access="IS_AUTHENTICATED_ANONYMOUSLY" 
+			/> -->
+		<intercept-url pattern="/login.do*" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+		<intercept-url pattern="/**" access="ROLE_USER" />
+		<!-- <intercept-url pattern="/**" access="ROLE_admin" /> -->
+
+
 		<form-login authentication-failure-handler-ref="loginFailureHandler"
 			authentication-success-handler-ref="loginSuccessHandler" login-page="/login.do"
-			always-use-default-target="true"/>
-		
+			always-use-default-target="true" />
+
 		<logout logout-success-url="/login.do" />
-		
-		<remember-me  key="2015-erp-kjq"/>
-		
+
+		<remember-me key="2015-erp-kjq" />
+
 		<session-management>
 			<concurrency-control max-sessions="1"></concurrency-control>
 		</session-management>
-		
-		<!--
-		<custom-filter ref="customFilter" before="FILTER_SECURITY_INTERCEPTOR" />
-		-->
-	</http>
-	
 
-	<beans:bean id="customFilter" class="com.kjq.erp.ext.spring.security.CustomFilter">
-		<beans:property name="authenticationManager" ref="authenticationManager"/> 
-        <beans:property name="securityMetadataSource" ref="securityMetadataSource"/>
-        <beans:property name="accessDecisionManager" ref="accessDecisionManager"/> 
-    </beans:bean>
-    
-    <beans:bean id="securityMetadataSource" class="com.kjq.erp.ext.spring.security.CustomSecurityMetadataSource"/>
-    <beans:bean id="accessDecisionManager" class="com.kjq.erp.ext.spring.security.CustomAccessDecisionManager"/>  
-      
+		<!-- <custom-filter ref="customFilter" before="FILTER_SECURITY_INTERCEPTOR" 
+			/> -->
+	</http>
+
+
+	<beans:bean id="customFilter"
+		class="com.kjq.erp.ext.spring.security.CustomFilter">
+		<beans:property name="authenticationManager" ref="authenticationManager" />
+		<beans:property name="securityMetadataSource" ref="securityMetadataSource" />
+		<beans:property name="accessDecisionManager" ref="accessDecisionManager" />
+	</beans:bean>
+
+	<beans:bean id="securityMetadataSource"
+		class="com.kjq.erp.ext.spring.security.CustomSecurityMetadataSource" />
+	<beans:bean id="accessDecisionManager"
+		class="com.kjq.erp.ext.spring.security.CustomAccessDecisionManager" />
+
 	<authentication-manager alias="authenticationManager">
 		<authentication-provider user-service-ref="customUserDetailsService">
 			<password-encoder hash="plaintext"></password-encoder>
 		</authentication-provider>
 	</authentication-manager>
-	
+
 	<beans:bean id="loginSuccessHandler"
 		class="com.kjq.erp.ext.spring.security.SavedRequestLoginSuccessHandler">
 		<beans:property name="changeRole" value="false" />
@@ -75,9 +76,9 @@
 	<beans:bean id="loginFailureHandler"
 		class="com.kjq.erp.ext.spring.security.LoginFailureHandler">
 	</beans:bean>
-	
+
 	<beans:bean id="customUserDetailsService"
 		class="com.kjq.erp.ext.spring.security.CustomUserDetailsService">
 	</beans:bean>
-    
+
 </beans:beans>

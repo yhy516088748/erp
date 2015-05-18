@@ -68,15 +68,16 @@ var getIPs = function (callback) {
 //insert IP addresses into the page
 var createIp = function (ip) {
     //local IPs
-    if (ip.match(/^(192\.168\.|169\.254\.|10\.|172\.(1[6-9]|2\d|3[01]))/))
+    if (ip.match(/^(192\.168\.|169\.254\.|10\.|172\.(1[6-9]|2\d|3[01]))/)){
+        document.getElementById("local-ip-title").textContent = "本地IP:";
         document.getElementById("local-ip").textContent = ip;
-    //assume the rest are public IPs
-    else
+    }else{
+        document.getElementById("public-ip-title").textContent = "公网IP:";
         document.getElementById("public-ip").textContent = ip;
+    }
 }
 
 function getIp() {
-    createIp(myip);
 
     getIPs(function (ip) {
         createIp(ip);

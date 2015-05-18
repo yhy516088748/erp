@@ -7,7 +7,7 @@ Ui_DataTable = function (parent) {
     this.parent = parent;
 
     /* 消息 延迟 时间 */
-    this.msgDelay = 1800;
+    this.msgDelay = 1500;
 
     this.init();
 }
@@ -52,9 +52,6 @@ Ui_DataTable.prototype = {
         this.sortMethod = sortMethod;
         this.setControlDiv();
     },
-    setTheadConfig: function (titleConfig) {
-        this.theadTitleConfig = titleConfig;
-    },
     setControlDiv: function () {
         if (this.controlFlag) {
             this.createAdd(this.controlDiv);
@@ -79,6 +76,9 @@ Ui_DataTable.prototype = {
         }
         $.each(this.sortMethod, function (i, k) {
             var o = rowData[k];
+            if (o == null || o ==""){
+                return;
+            }
             var td = that.createTd(tr);
             if (o instanceof jQuery) {
                 o.appendTo(td);
@@ -102,7 +102,6 @@ Ui_DataTable.prototype = {
             /* 创建 删除按钮 与 修改按钮 */
             var obj = $("<div />").addClass("row-control");
             this.createDelete(obj, rowData);
-            this.createUpdate(obj, rowData);
             this.createQuery(obj, rowData);
             rowData.control = obj;
         }
@@ -181,109 +180,23 @@ Ui_DataTable.prototype = {
         var $button = $("<button />").addClass("btn btn-mini bgcolor-blue").appendTo(parent);
         $icon = $("<i />").addClass("icon-search").appendTo($button);
         var that = this;
-        var obj;
         var num = 0;
         $button.click(function () {
-            if (obj) {
-                if (num == 0) {
-                    obj.show();
-                    num = 1;
-                } else {
-                    obj.hide();
-                    num = 0;
-                }
-            } else {
-                obj = that.createQuerySpace(data);
-                num = 1;
-            }
-
+            that.createQuerySpace(data);
         });
         return $button;
     },
-    /* 创建一个 查看的 details table */
-    /*
-    createQueryDetailsTable: function (data) {
-        var tr = $("<tr />");
-        var td = $("<td colspan='" + this.sortMethod.length + "'/>").addClass("details").appendTo(tr);
-        var that = this;
-        var $ul = $("<ul />").appendTo(td);
-        $.each(data,function(k,v){
-            if (v instanceof  jQuery) {
-                return;
-            }
-            var $li = $("<li />").appendTo($ul);
-            $("<span />").text(that.theadTitle[k] + "：").appendTo($li);
-            $("<span />").text(v).appendTo($li);
-        })
-        return tr;
+    setQueryAction : function(){
+
     },
-    */
     createQuerySpace : function(data){
         var that = this;
-        this.div.data("c", this.div.attr("class"));
-
-        var d = this.createSubmit(data, function () {
-            d.remove();
-            util.useAnim(that.div, "moveFromLeftFade", "in");
-        });
-
-        d.appendTo(that.parent);
-
-        this.div.hide();
-
-        util.useAnim(d, "moveFromRightFade", "in")
-    },
-    /* 修改数据 会打开 一个 修改数据信息的框 控件数据源自于 table 的原始Tbody的数据信息 */
-    createUpdate: function (parent, data) {
-        var $button = $("<button />").addClass("btn btn-mini bgcolor-green").appendTo(parent);
-        $icon = $("<i />").addClass("icon-pencil").appendTo($button);
-        var that = this;
-        var obj;
-        var num = 0;
-        $button.click(function () {
-            if (obj) {
-                if (num == 0) {
-                    obj.show();
-                    num = 1;
-                } else {
-                    obj.hide();
-                    num = 0;
-                }
-            } else {
-                obj = that.createUpdateSpace(data);
-                num = 1;
-            }
-
-        });
-        return $button;
-    },
-    /* 创建一个 查看的 details table */
-    createUpdateSpace: function (data) {
-        var that = this;
-        this.div.data("c", this.div.attr("class"));
-
-        var d = this.createSubmit(data, function () {
-            d.remove();
-            util.useAnim(that.div, "moveFromLeftFade", "in");
-        }, function (updateData) {
-            /* updateData 为新更新后的数据源 */
-            if (updateData) {
-                /* 将数据 提交至后台 进行处理 */
-
-                /* 更新前台数据源 */
-                console.log(updateData);
-                util.successMsg("修改数据成功", that.msgDelay);
-            } else {
-                util.errMsg("数据为空", that.msgDelay);
-            }
-        });
-
+        var d = $("<div />");
+        var userinfo = new UserInfo(d);
+        userinfo.setData(data.userid);
         /* 创建 input 控件 */
-        d.appendTo(that.parent);
-
-        this.div.hide();
-
-        util.useAnim(d, "moveFromRightFade", "in")
+        conformMain.setBody(d);
+        conformMain.show("moveFromRight");
     },
     /* 删除按钮 会 包裹数据 */
     createDelete: function (parent, data) {
@@ -291,7 +204,13 @@ Ui_DataTable.prototype = {
         $icon = $("<i />").addClass("icon-delete").appendTo($button);
         var that = this;
         $button.click(function () {
-            console.log(data);
+            var newData = data;
+            newData.control = null;
+            var res = util.postJson(that.deleteAction,newData);
+            if (!res){
+                util.errMsg("数据删除失败", that.msgDelay);
+                return;
+            }
             util.successMsg("数据删除成功", that.msgDelay);
             var tr = parent.parent().parent();
             tr.addClass("moveToRightFade");
@@ -300,28 +219,12 @@ Ui_DataTable.prototype = {
                 tr.off(animEvent);
                 tr.remove();
             })
-
-            /* 还需要一同删除 附加 details 信息 */
-            var afterTr = tr.next();
-            var details = afterTr.find(".details");
-            if (details[0]) {
-                afterTr.attr("class", "");
-                afterTr.addClass("moveToRightFade");
-                var animEvent = util.getAnimEndEvent();
-                afterTr.on(animEvent, function () {
-                    afterTr.off(animEvent);
-                    afterTr.remove();
-                })
-            }
         })
         return $button;
-    }
-    ,
-    /* 获取 数据 方式 选择 类型 以行 或 块进行获取 */
-    getSpaceData: function (obj, type) {
-        /* type = "tr" or type = "space" */
-    }
-    ,
+    },
+    setDeleteAction : function(url){
+        this.deleteAction = url;
+    },
     /* 设置Control标志 */
     setControlFlag: function (flag) {
         this.controlFlag = true;
@@ -330,102 +233,6 @@ Ui_DataTable.prototype = {
     /* 渲染 将 tbody 部分数据清空进行 数据重新整合 */
     reFlash: function () {
 
-    },
-    /* 功能块 */
-    /* old */
-    createSubmit: function (data, callback1, callback2) {
-        var that = this;
-        var $div = $("<div />");
-        var dataObj = new Array();
-
-        var $control = $("<div />").appendTo($div);
-
-        if (callback2){
-            $("<button />").addClass("btn btn-left-radius bgcolor-gray").text("返回").appendTo($control).click(function () {
-                conform.close("moveToTopFade");
-                callback1($div);
-            });
-            $("<button />").addClass("btn btn-right-radius bgcolor-blue").text("提交").appendTo($control).click(function () {                conform.close("moveToTopFade");
-                callback2(that.getDataByDataObj(dataObj));
-            });
-        }else{
-            $("<button />").addClass("btn bgcolor-gray").text("返回").appendTo($control).click(function () {
-                conform.close("moveToTopFade");
-                callback1($div);
-            });
-        }
-
-        var tab = new Ui_Tab($div);
-        /* 整理 数据 */
-        var tabMenuList = new Array();
-        var tabContents = new Array();
-        $.each(this.theadTitleConfig, function (i, v) {
-            var obj = {text: v.title};
-            var $contentDiv = $("<div />");
-            for (var i = 0; i < v.keys.length; i++) {
-                var key = v.keys[i];
-                $("<label />").addClass("label bgcolor-white").attr("style", "width:100%").text(that.theadTitle[key]).appendTo($contentDiv);
-                ;
-                var input = $("<input />").addClass("text").attr("style", "width:100%").attr("value", data[key]).appendTo($contentDiv);
-                var o = {};
-                o[key] = input;
-                dataObj.push(o);
-            }
-            tabMenuList.push(obj);
-            tabContents.push($contentDiv);
-        })
-
-        tab.setMenu(tabMenuList);
-        tab.setContent(tabContents);
-
-
-        return $div;
-    }
-    ,
-//createSubmit: function (data,callback) {
-//    var that = this;
-//    var $div = $("<div />");
-//    var dataObj = new Array();
-//
-//    $.each(data,function(k,v){
-//        if (k == "control"){
-//            return;
-//        }
-//        var title = that.theadTitle[k] + "：";
-//
-//        $("<label />").addClass("label bgcolor-white").attr("style","width:100%").text(title).appendTo($div);;
-//        var input = $("<input />").addClass("text").attr("style","width:100%").attr("value", v).appendTo($div);
-//
-//        var obj = {};
-//        obj[k] = input;
-//        dataObj.push(obj);
-//    });
-//    var that = this;
-//    var $control = $("<div />").appendTo($div);
-//    $("<button />").addClass("btn btn-left-radius bgcolor-gray").attr("style","width:100%").text("取消").appendTo($control).click(function () {
-//        conform.close("moveToTopFade");
-//    });
-//    $("<button />").addClass("btn btn-right-radius bgcolor-blue").attr("style","width:100%").text("提交").appendTo($control).click(function () {
-//        conform.close("moveToTopFade");
-//        callback(that.getDataByDataObj(dataObj));
-//    });
-//    return $div;
-//},
-    getDataByDataObj: function (dataObj) {
-        var json = null;
-        $.each(dataObj, function (_, v) {
-            $.each(v, function (k, obj) {
-                var value = obj.val();
-                if (!value) {
-                    return;
-                }
-                if (!json) {
-                    json = {};
-                }
-                json[k] = value;
-            })
-        });
-        return json;
     }
 }
 
@@ -471,23 +278,16 @@ Ui_Tab.prototype = {
             }
             this.createMenuList(arrObj[i], i, cssClass);
         }
-        /*
-        if (!this.$tabMenuBottom) {
-            this.initTabMenuBottom();
-        }
-        */
-        //var tabs = this.$tabMenuList.find("li a");
-        //this.$tabMenuBottom.css("width", $(tabs[0]).outerWidth());
     },
     createMenuList: function (dataObj, num, cssClass) {
         var $li = $("<li />");
         var $a = $("<a />").appendTo($li);
         var that = this;
         $a.click(function () {
-            var tabs = that.$tabMenuList.find("li");
+            var tabs = that.$tabMenuList.children("li");
             tabs.removeClass("select");
             $(this).parent().addClass("select");
-            var tabContents = that.$tabContent.find(".tab-content-body");
+            var tabContents = that.$tabContent.children(".tab-content-body");
             tabContents.removeClass("active");
             tabContents.hide();
             $(tabContents[num]).addClass("active");

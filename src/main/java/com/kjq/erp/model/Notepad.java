@@ -4,11 +4,11 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Entity;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -33,7 +33,6 @@ public class Notepad extends UUIDEntity implements Serializable{
 	
 	private User user;
 
-	
 	@Column(name="title",length=50)
 	public String getTitle() {
 		return title;

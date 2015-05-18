@@ -31,9 +31,41 @@ Calendar.prototype = {
         /* 创建一个日历 */
         this.createCalendar();
     },
+    convertData : function(dataObj){
+        var newData = {};
+        newData.specifiedTime = userObj.specifiedTime;
+        var days = new Array();
+        for (var i = 0;i < dataObj.length ; i++){
+            var o = dataObj[i];
+            var num = parseInt(o.signinDate.substr(8, 2)) - 1;
+            if (!days[num]){
+                days[num] = {};
+                days[num].realTime = new Array();
+            }
+            if (days[num].flag){
+
+            }else{
+                days[num].flag = false;
+            }
+            if (o.signinType == "加班申请"){
+                days[num].flag = true;
+            }
+            if (o.signinTime && o.signinType != "加班申请"){
+                days[num].realTime.push(o.signinTime);
+            }
+
+        }
+        for (var j=0;j<days.length;j++){
+            if (!days[j]){
+                days[j] = {};
+            }
+        }
+        newData.days = days;
+        return newData;
+    },
     /* 通过每日数据 对 整个 Calendar 进行上下班 加班 颜色的变化 */
     setData: function (dataObj) {
-        this.dataObj = dataObj;
+        this.dataObj = dataObj = this.convertData(dataObj);
 
         /* 所有日期数据 */
         this.days = days = dataObj.days;
@@ -43,6 +75,25 @@ Calendar.prototype = {
             var dayNum = i + 1;
             this.setDay(dayData, dayNum);
         }
+
+        this.setNow();
+        // 对当日数据 进行初始化
+
+        if (this.nowDay){
+            if (this.nowDay.realTime[0]){
+                this.calendar.find("#calendar-morning").addClass("bdcolor-bottom-blue").text("M: " + this.nowDay.realTime[0]);
+            }
+            if (this.nowDay.flag){
+                if (this.nowDay.realTime[1]) {
+                    this.calendar.find("#calendar-afternoon").addClass("bdcolor-bottom-black").text("N: " + this.nowDay.realTime[1]);
+                }
+            }else{
+                if (this.nowDay.realTime[1]){
+                    this.calendar.find("#calendar-afternoon").addClass("bdcolor-bottom-green").text("A: " + this.nowDay.realTime[1]);
+                }
+            }
+        }
+
         /* 对数据进行统计 去除周末 */
         //var str = "";
         ///* 计算周末加班天数 */
@@ -123,14 +174,19 @@ Calendar.prototype = {
         $("<button />").addClass("btn btn-left-radius bgcolor-blue").text("签到").appendTo(control).click(function () {
             /* 将 当前时间包裹后 传输至后台 以及 userid */
             var t = timer.getTimer();
-            var str = util.addZero(t.h,2) + ":" + util.addZero(t.m,2);
+            var str = util.addZero(t.h,2) + ":" + util.addZero(t.m,2) + ":" + util.addZero(t.s,2);
+            var res = util.postJson("erp/addSigninDay.do",{signinType : "上班"});
+            if (!res){
+                util.errMsg("签退失败",that.msgDelay);
+                return
+            }
             if (!that.nowDay){
                 var obj = {};
                 obj.realTime = new Array();
                 obj.realTime[0] = str;
                 that.nowDay = obj;
                 that.setDay(that.nowDay);
-                that.calendar.find("#calendar-morning").addClass("bdcolor-bottom-blue").text("上班:" + str);
+                that.calendar.find("#calendar-morning").addClass("bdcolor-bottom-blue").text("M: " + str);
                 util.successMsg("签到成功",that.msgDelay);
             }else{
                 util.errMsg("签到失败",that.msgDelay);
@@ -146,7 +202,11 @@ Calendar.prototype = {
             .click(function () {
                 var d = that.createSubmit("申请加班原因：【请如实填写】",function (text) {
                     /* text 为提交的信息 */
-                    console.log(text);
+                    var res = util.postJson("erp/addSigninDay.do",{signinType : "加班申请",remark : text});
+                    if (!res){
+                        util.errMsg("申请提交成功",that.msgDelay);
+                        return
+                    }
                     if (text){
                         that.nowDayFlag = true;
                         util.successMsg("加班申请成功提交",that.msgDelay);
@@ -160,20 +220,25 @@ Calendar.prototype = {
         /* 签退按钮 */
         $("<button />").addClass("btn btn-right-radius bgcolor-green").text("签退").appendTo(control).click(function(){
             var t = timer.getTimer();
-            var str = util.addZero(t.h,2) + ":" + util.addZero(t.m,2);
+            var str = util.addZero(t.h,2) + ":" + util.addZero(t.m,2) + ":" + util.addZero(t.s,2);
             if (that.nowDay){
                 if (that.nowDay.realTime.length == 2){
                     util.errMsg("签退失败",that.msgDelay);
                     return;
+                }
+                var res = util.postJson("erp/addSigninDay.do",{signinType : "下班"});
+                if (!res){
+                    util.errMsg("签退失败",that.msgDelay);
+                    return
                 }
                 that.nowDay.realTime[1] = str;
                 that.nowDay.flag = that.nowDayFlag?true:false;
                 that.setDay(that.nowDay);
                 /* 弹出一个成功签退的对话框 */
                 if (that.nowDay.flag){
-                    that.calendar.find("#calendar-night").addClass("bdcolor-bottom-black").text("加班:" + str);
+                    that.calendar.find("#calendar-night").addClass("bdcolor-bottom-black").text("N: " + str);
                 }else{
-                    that.calendar.find("#calendar-afternoon").addClass("bdcolor-bottom-orange").text("下班:" + str);
+                    that.calendar.find("#calendar-afternoon").addClass("bdcolor-bottom-green").text("A: " + str);
                 }
                 util.successMsg("签退成功",that.msgDelay);
             }else{
@@ -190,7 +255,7 @@ Calendar.prototype = {
             var li = $("<li />");
             if (i == 0) {
                 var span = $("<span />").addClass("bdcolor-bottom-black").appendTo(li);
-                $("<span />").addClass("title").text("现在:").appendTo(span);
+                $("<span />").addClass("title").text("Now: ").appendTo(span);
                 timer.dom.appendTo(span);
             } else {
                 $("<span />").addClass("value").attr("id", arrId[i]).appendTo(li);
@@ -257,14 +322,18 @@ Calendar.prototype = {
         var lis = day.find("ul li");
         /* 判定是否为加班 */
 
-        $(lis[0]).addClass("bgcolor-blue").find("span").text("上:" + dayData.realTime[0]);  // 上班
+        $(lis[0]).addClass("bgcolor-blue").find("span").text("M : " + dayData.realTime[0]);  // 上班
         if (dayData.flag) {
             //lis[2]  //加班
-            $(lis[2]).addClass("bgcolor-black").find("span").text("加:" + dayData.realTime[1]);  // 加班
+            if (dayData.realTime[1]) {
+                $(lis[2]).addClass("bgcolor-black").find("span").text("N : " + dayData.realTime[1]);  // 加班
+            }
         } else {
             if (dayData.flag != null){
                 //lis[1] // 下班
-                $(lis[1]).addClass("bgcolor-green").find("span").text("下:" + dayData.realTime[1]);  // 下班
+                if (dayData.realTime[1]){
+                    $(lis[1]).addClass("bgcolor-green").find("span").text("A : " + dayData.realTime[1]);  // 下班
+                }
             }
         }
     },
@@ -272,9 +341,11 @@ Calendar.prototype = {
     createThead: function () {
         var thead = $("<thead />");
         var tr = this.createTr().attr("class", "week-title").appendTo(thead);
-        var weekArray = new Array("周日", "周一", "周二", "周三", "周四", "周五", "周六");
+        var weekArray = new Array("日", "一", "二", "三", "四", "五", "六");
+        //var weekArray = new Array("SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT");
         for (var i in weekArray) {
-            var td = this.createTd(weekArray[i]);
+            var td = this.createTd();
+            $("<span />").text(weekArray[i]).appendTo(td);
             td.appendTo(tr);
         }
         return thead;
@@ -295,14 +366,13 @@ Calendar.prototype = {
         this.createOtherWeek(this.tbody, year, month);
         this.createLastWeek(this.tbody, year, month);
         this.setHoverEvent();
-        this.setNow();
     },
     setHoverEvent: function () {
         /* 增加click 之后的样式CSS */
         var that = this;
         this.calendar.find(".date").click(function () {
-            $(".date").removeClass("date-hover");
-            $(this).addClass("date-hover");
+            $(".date").removeClass("date-hover bgcolor-red");
+            $(this).addClass("date-hover bgcolor-red");
             that.clickDay = $(this).attr("day");
         });
     },
@@ -311,11 +381,12 @@ Calendar.prototype = {
         var dateNow = this.calendar.find(".date-now");
         var now = new Date();
         var nowDay = now.getDate();
+        this.nowDay = this.dataObj.days[nowDay - 1];
         for (var i = 0; i < month.length; i++) {
             var obj = $(month[i]);
             if (obj.attr("day") == nowDay) {
                 this.dateNow.data("day",nowDay);
-                obj.addClass("date-hover");
+                obj.addClass("date-hover bgcolor-red");
                 this.clickDay = nowDay;
                 this.dateNow.appendTo(obj);
                 return;

@@ -1,20 +1,13 @@
 package com.kjq.erp.actions;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 
-import com.kjq.erp.model.Menu;
 import com.kjq.erp.util.Response;
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -36,14 +29,25 @@ public class IndexAction extends ActionSupport {
 
 	@Action(value = "getToday")
 	public void getToday() throws IOException{
+		
 		JSONObject json = new JSONObject();
 
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		SimpleDateFormat sdft = new SimpleDateFormat("HH:mm");
 		
-		Date today = new Date();
-		json.put("today", sdf.format(today));
-		json.put("time", sdft.format(today));
+		
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(new Date());
+		
+		JSONObject obj = new JSONObject();
+		obj.put("year", cal.get(Calendar.YEAR));
+		obj.put("month", cal.get(Calendar.MONTH)+1);
+		obj.put("day", cal.get(Calendar.DATE));
+		
+		obj.put("hour", cal.get(Calendar.HOUR_OF_DAY));
+		obj.put("minute", cal.get(Calendar.MINUTE));
+		obj.put("second", cal.get(Calendar.SECOND));
+		
+		json.put("Status", "OK");
+		json.put("Timer", obj.toString());
 		
 		Response response = new Response();
 		response.doResponse(json.toString());

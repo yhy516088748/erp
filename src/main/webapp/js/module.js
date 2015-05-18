@@ -11,14 +11,6 @@ PunchClock = function (parent) {
     this.init();
 }
 
-/*
- this.data = data = {
- specifiedTime: ["08:30:00", "17:00:00"],
- realTime: ["08:30:00"],
- flag: false
- }
- */
-
 PunchClock.prototype = {
     init: function () {
         this.punchClock = $("<div />").addClass("punch-clock");
@@ -32,51 +24,15 @@ PunchClock.prototype = {
         portLet.setTitle(title).setColor(titleColor, bodyColor);
         var div = $("<div />").addClass("punch-clock-body");
         var childDiv = $("<div />").addClass("punch-clock-body-child").appendTo(div);
-        var calendar = new Calendar(childDiv);
-        var obj = {
-            specifiedTime: ["08:30", "17:00"],
-            days: [{
-                realTime: ["08:30", "17:00"], flag: false
-            }, {
-                realTime: ["08:30", "17:00"], flag: false, dayWhat: "字符串"
-            }, {
-                realTime: ["08:30", "17:00"], flag: true, dayWhat: "字符串"
-            }, {}, {}, {
-                realTime: ["08:30", "17:00"], flag: true
-            }, {
-                realTime: ["08:30", "17:00"], flag: false
-            }, {
-                realTime: ["08:30", "17:00"], flag: false, dayWhat: "字符串"
-            }, {
-                realTime: ["08:30", "17:00"], flag: true, dayWhat: "字符串"
-            }, {
-                realTime: ["08:30", "17:00"], flag: false, dayWhat: "字符串"
-            }, {}, {}, {
-                realTime: ["08:30", "17:00"], flag: false
-            }, {
-                realTime: ["08:30", "17:00"], flag: false, dayWhat: "字符串"
-            }, {
-                realTime: ["08:30", "17:00"], flag: true, dayWhat: "字符串"
-            }, {
-                realTime: ["08:30", "17:00"], flag: false, dayWhat: "字符串"
-            }, {
-                realTime: ["08:30", "17:00"], flag: false, dayWhat: "字符串"
-            }, {}, {}, {
-                realTime: ["08:30", "17:00"], flag: false, dayWhat: "字符串"
-            }, {
-                realTime: ["08:30", "17:00"], flag: true, dayWhat: "字符串"
-            }, {
-                realTime: ["08:30", "17:00"], flag: false, dayWhat: "字符串"
-            }, {
-                realTime: ["08:30", "17:00"], flag: false, dayWhat: "字符串"
-            }, {
-                realTime: ["08:30", "17:00"], flag: true
-            }, {
-                realTime: ["08:30", "17:00"], flag: false
-            }, {}, {
-                realTime: ["08:30", "17:00"], flag: false
-            }]
+
+        var res = util.getJson("erp/getSigninMonth.do");
+        var obj;
+        if (res){
+            obj = res.List;
+        }else{
+            return;
         }
+        var calendar = new Calendar(childDiv);
         calendar.setData(obj);
         portLet.setBody(div);
         return portLet;
@@ -105,12 +61,12 @@ UserManager.prototype = {
         table.setControlFlag(true);
         table.setThead(
             {
-                name: "员工姓名",
+                name: "姓名",
                 idNumber: "证件号",
                 gender: "性别",
                 birthday: "生日",
-                Email: "邮箱",
-                telephone: "联系电话",
+                email: "邮箱",
+                phone: "联系电话",
                 address: "住址",
                 zipCode: "邮编",
                 nativePlace: "籍贯",
@@ -132,59 +88,13 @@ UserManager.prototype = {
                 workEndTime: "标准下班时间",
                 ContractStartDate: "合同起始日期",
                 ContractEndDate: "合同失效日期",
-                remark: "备注"
+                remark: "备注",
+                userid : ""
             }
         );
-        table.setTheadConfig(new Array({
-                title: "人员",
-                keys: ["name", "idNumber", "gender", "birthday", "Email", "telephone", "address", "zipCode", "nativePlace"]
-            },
-            {title: "附加", keys: ["isMarry", "isInsurance", "isPOInsurance", "isClild", "isClildInsurance"]},
-            {title: "安全", keys: ["loginName", "password"]},
-            {title: "岗位", keys: ["groups", "position"]},
-            {
-                title: "人事",
-                keys: ["gjjAccount", "sbAccount", "workDate", "Education", "Professional", "workStartTime", "workEndTime", "workEndTime", "ContractStartDate", "ContractEndDate"]
-            }
-        ));
-
-        table.setTbody(new Array(
-            {
-                /*
-                name: "虞霆",
-                idNumber: "310108198707060556",
-                gender: "男",
-                birthday: "1987-07-06",
-                Email: "yuting@sh-tpa.com",
-                telephone: "13764976571",
-                address: "上海市闸北区谈家桥路152号901",
-                zipCode: "200070",
-                nativePlace: "上海",
-                */
-                groups: "IT部",
-                position: "程序猿",
-                /*
-                loginName: "yuting",
-                password: "yuting",
-                */
-                /*
-                gjjAccount: "1234567890",
-                sbAccount: "1234567890",
-                workDate: "2010年10月",
-                isMarry: "是",
-                isInsurance: "是",
-                isPOInsurance: "是",
-                isClild: "是",
-                isClildInsurance: "是",
-                Education: "本科",
-                Professional: "计算机科学与技术",
-                */
-                workStartTime: "08:30",
-                workEndTime: "17:00",
-                ContractStartDate: "2010年10月",
-                ContractEndDate: "2018年10月"
-            }
-        ))
+        var res = util.getJson("erp/getUserList.do");
+        //table.setDeleteAction("erp/delUser.do");
+        table.setTbody(res.List);
         portLet.setBody(div);
         return portLet;
     }
@@ -203,8 +113,7 @@ UserInfo.prototype = {
     },
     createTitle: function () {
         var $title = $("<div />").addClass("user-info-title").appendTo(this.userinfo);
-        var $h3 = $("<h3 />").text("Employee").addClass("page-title").appendTo($title);
-        $("<small />").text("information").appendTo($h3);
+        this.$titleH3 = $h3 = $("<h3 />").addClass("page-title").appendTo($title);
     },
     createBody: function () {
         var $body = $("<div />").addClass("user-info-body row-fluid profile").appendTo(this.userinfo);
@@ -212,21 +121,50 @@ UserInfo.prototype = {
         /* 此地有一个 tab 页*/
         var $tab = new Ui_Tab($body);
         $tab.setMenu(new Array(
-            {text: "Personal"},
-            {text: "Family"},
-            {text: "Work"},
-            {text: "Safe Account"}
+            {text: "Employee"},
+            {text: "Account"}
         ));
 
         this.$tab = $tab;
     },
-    createOne : function(titleData,data){
+    createOne : function(titleData,data,allData){
         var $div = $("<div />").addClass("row-fluid");
         /* 图片 信息 */
-        var $imgdiv = $("<div />").addClass("profile-classic span2").appendTo($div);
-        $("<img />").attr("src","img/profile-img.png").appendTo($imgdiv);
-        $("<a />").attr("href","#").addClass("profile-edit").text("Edit").appendTo($imgdiv);
+        var $imgUl = $("<ul />").addClass("profile-classic unstyle span3").appendTo($div);
+        var $imgLi = $("<li />").appendTo($imgUl);
+        $("<img />").attr("src","img/profile-img.png").appendTo($imgLi);
+        $("<a />").attr("href","#").addClass("profile-edit").text("Edit").appendTo($imgLi);
 
+        var $cdiv = $("<div />").addClass("row-fluid span9").appendTo($div);
+        /* 个人信息 */
+        var $tab = new Ui_Tab($cdiv);
+
+        $tab.setMenu(new Array(
+            {text: "Personal"},
+            {text: "Other"},
+            {text: "Family"},
+            {text: "Work"}
+        ));
+
+        $tab.setContent(new Array(
+            this.createTitleSpace(titleData,data),
+            this.getOneTwoSpace(allData),
+            this.getTwoSpace(allData),
+            this.getThreeSpace(allData)
+        ))
+        return $div;
+    },
+    createTitleSpace : function(titleData,data){
+        var $userUl = $("<ul />").addClass("profile-classic unstyle");
+        this.$titleH3.text(data.name);
+        $("<small />").text("information").appendTo(this.$titleH3);
+        $.each(data,function(k,v){
+            $("<li><span>"+ titleData[k] + "</span>" + v + "</li>").appendTo($userUl);
+        });
+        return  $userUl;
+    },
+    createSpace : function(titleData,data){
+        var $div = $("<div />").addClass("row-fluid");
         /* 个人信息 */
         var $userUl = $("<ul />").addClass("profile-classic unstyle span10").appendTo($div);
         $.each(data,function(k,v){
@@ -234,44 +172,12 @@ UserInfo.prototype = {
         });
         return  $div;
     },
-    createTwo : function(titleData,data){
-        var $div = $("<div />").addClass("row-fluid");
-        /* 图片 信息 */
-        var $imgdiv = $("<div />").addClass("profile-classic span2").appendTo($div);
-        $("<img />").attr("src","img/profile-img.png").appendTo($imgdiv);
-        $("<a />").attr("href","#").addClass("profile-edit").text("Edit").appendTo($imgdiv);
-
-        /* 个人信息 */
-        var $userUl = $("<ul />").addClass("profile-classic unstyle span10").appendTo($div);
-        $.each(data,function(k,v){
-            $("<li><span>"+ titleData[k] + "</span>" + v + "</li>").appendTo($userUl);
-        });
-        return  $div;
-    },
-    createThree : function(titleData,data){
-        var $div = $("<div />").addClass("row-fluid");
-        /* 图片 信息 */
-        var $imgdiv = $("<div />").addClass("profile-classic span2").appendTo($div);
-        $("<img />").attr("src","img/profile-img.png").appendTo($imgdiv);
-        $("<a />").attr("href","#").addClass("profile-edit").text("Edit").appendTo($imgdiv);
-
-        /* 个人信息 */
-        var $userUl = $("<ul />").addClass("profile-classic unstyle span10").appendTo($div);
-        $.each(data,function(k,v){
-            $("<li><span>"+ titleData[k] + "</span>" + v + "</li>").appendTo($userUl);
-        });
-        return  $div;
-    },
-    createFour : function(titleData,data){
+    createAccountSpace : function(titleData,data){
         /* 账户密码 信息 以及邮箱 信息*/
         var $div = $("<div />").addClass("row-fluid");
-        /* 图片 信息 */
-        var $imgdiv = $("<div />").addClass("profile-classic span2").appendTo($div);
-        $("<img />").attr("src","img/profile-img.png").appendTo($imgdiv);
-        $("<a />").attr("href","#").addClass("profile-edit").text("Edit").appendTo($imgdiv);
 
         /* 账户安全信息 */
-        var $userUl = $("<ul />").addClass("profile-classic unstyle span10").appendTo($div);
+        var $userUl = $("<ul />").addClass("profile-classic unstyle span12").appendTo($div);
         /* 登陆账户 */
         $("<li><span>"+ titleData.loginName + "</span>" + data.loginName + "</li>").appendTo($userUl);
 
@@ -288,33 +194,28 @@ UserInfo.prototype = {
         var $rePassword = $("<input type='password' />").addClass("text span12").appendTo(password);
 
         var $controls = $("<li />").addClass("controls").appendTo($userUl);
-        $("<button />").addClass("btn bgcolor-gray").text("重置").appendTo($controls);
-        $("<button />").addClass("btn bgcolor-blue").text("提交").appendTo($controls);
+        $("<button />").addClass("btn bgcolor-green").text("Save Changes").appendTo($controls);
+        $("<button />").addClass("btn bgcolor-gray").text("Reset").appendTo($controls);
         return  $div;
     },
     setData : function(userid){
-        var data = null;
+        var data = {};
         if (userid){
             data.userid = userid;
         }
-        var res = util.service("/erp/getUserInfo.do",data);
+        var res = util.postJson("erp/getUserInfo.do",data);
         if (!res){
-            //return;
+            return;
         }
-        var $body = $("<div />");
-        var $imgdiv = $("<div />").addClass("profile-classic span2").appendTo($body);
-        $("<img />").attr("src","img/profile-img.png").appendTo($imgdiv);
-        $("<a />").attr("href","#").addClass("profile-edit").text("Edit").appendTo($imgdiv);
+        /*
         var fileName = $("<input />").attr("type","file").appendTo($imgdiv);
         fileName.change(function(){
-            util.fileUpload("/erp/uploadKJQImg.do",fileName[0]);
+            util.fileUpload("http://10.10.10.132:8080/erp/getUserInfo.do",fileName[0]);
         })
+        */
         this.$tab.setContent(new Array(
-            $body
-            //this.getOneSpace(res.Info),
-            //this.getTwoSpace(res.Info),
-            //this.getThreeSpace(res.Info),
-            //this.getFourSpace(res.Info)
+            this.getOneSpace(res.Info),
+            this.getFourSpace(res.Info)
         ));
     },
     getOneSpace : function(data){
@@ -324,41 +225,49 @@ UserInfo.prototype = {
             idNumber: "Id Number :",
             gender: "Gender :",
             birthday: "Birthday :",
-            email: "Email :",
-            phone: "Telephone :",
             workYear: "Work Year :",
-            address: "Address :",
-            zipCode: "Zip Code :",
             nativePlace: "Native Place :",
             education: "Education :",
             professional: "Professional :",
-            bankName : "Bank Name :",
-            bankNum : "Bank Number :",
-            gjjAccount: "Accumulation Fund :",
-            sbAccount: "Social Security Numbers : ",
             remark : "About :"
         }
-        var data = {
+
+        var newData = {
             name: data.name,
             idNumber: data.idNumber,
             gender: data.gender,
             birthday: data.birthday,
-            email: data.email,
-            phone: data.phone,
             workYear : data.workYear,
-            address: data.address,
-            zipCode: data.zipCode,
             nativePlace: data.nativePlace,
             education: data.education,
             professional: data.professional,
-            bankName : data.bankName,
-            bankNum : data.bankNum,
-            gjjAccount : data.gjjAccount,
-            sbAccount : data.sbAccount,
             remark : data.remark
         }
 
-        return this.createOne(titleData,data);
+        return this.createOne(titleData,newData,data);
+    },
+    getOneTwoSpace : function(data){
+        var titleData = {
+            email: "Email :",
+            phone: "Telephone :",
+            address: "Address :",
+            zipCode: "Zip Code :",
+            bankName : "Bank Name :",
+            bankNumber : "Bank Number :",
+            gjjAccount: "Accumulation Fund :",
+            sbAccount: "Social Security Numbers : "
+        }
+        var data = {
+            email: data.email,
+            phone: data.phone,
+            address: data.address,
+            zipCode: data.zipCode,
+            bankName : data.bankName,
+            bankNumber : data.bankNumber,
+            gjjAccount : data.gjjAccount,
+            sbAccount : data.sbAccount
+        }
+        return this.createSpace(titleData,data);
     },
     getTwoSpace : function(data){
         /* 家庭信息 */
@@ -382,7 +291,7 @@ UserInfo.prototype = {
             isClildInsurance: getYesOrNo(data.isClildInsurance)
         }
 
-        return this.createTwo(titleData,data);
+        return this.createSpace(titleData,data);
     },
     getThreeSpace : function(data){
         var titleData = {
@@ -393,6 +302,7 @@ UserInfo.prototype = {
             contractStartDate: "Contract Start Date :",
             contractEndDate: "Contract End Date :"
         };
+
         var data = {
             department: data.department,
             position: data.position,
@@ -401,14 +311,15 @@ UserInfo.prototype = {
             contractStartDate: data.contractStartDate,
             contractEndDate: data.contractEndDate
         }
-        return this.createThree(titleData,data);
+
+        return this.createSpace(titleData,data);
     },
     getFourSpace : function(data){
         var titleData = {
-            loginName: "登录账户 :",
-            oldPassword: "登录密码 :",
-            newPassword : "新的密码 :",
-            rePassword : "重复密码 :"
+            loginName: "Login Name :",
+            oldPassword: "Pass Word :",
+            newPassword : "New Pass Word :",
+            rePassword : "Re Pass Word :"
         }
         var data = {
             loginName: "yuting",
@@ -416,7 +327,7 @@ UserInfo.prototype = {
             newPassword : "",
             rePassword : ""
         }
-        return this.createFour(titleData,data);
+        return this.createAccountSpace(titleData,data);
     }
 }
 

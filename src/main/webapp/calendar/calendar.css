@@ -31,7 +31,7 @@ html,body{
 
 .date-control-header{
     position: relative;
-    border-bottom: 3px solid #ff9999;
+    border-bottom: 3px solid #ff6c60;
     font-size: 15px;
 }
 
@@ -44,13 +44,13 @@ html,body{
 
 .date-add:hover{
     cursor: pointer;
-    color: #ff9999;
+    color: #ff6c60;
 }
 
 .date-control-footer{
     font-size: 12px;
     text-align: right;
-    border-top: 3px solid #ff9999;
+    border-top: 3px solid #ff6c60;
 }
 
 
@@ -67,7 +67,7 @@ html,body{
 
 .date-control-header ul li{
     display: inline-block;
-    margin-right: 3px;
+    margin-right: 10px;
 }
 
 .calendar table{
@@ -77,8 +77,9 @@ html,body{
 }
 
 .week-title td{
-    padding-right: 5px;
     line-height: 35px;
+    color: gray;
+    text-align: center;
 }
 
 .date{
@@ -105,7 +106,7 @@ html,body{
     width: 0px;
     height: 0px;
     border: 6px solid transparent;
-    border-bottom-color: #ff9999;
+    border-bottom-color: #ff6c60;
     transform:rotate(45deg);
     -ms-transform:rotate(45deg); 	/* IE 9 */
     -moz-transform:rotate(45deg); 	/* Firefox */
@@ -122,35 +123,33 @@ html,body{
 .date-time ul{
     list-style: none;
     font-size: 12px;
-    margin-bottom: 10px;
+    margin-bottom: 1px;
+    margin-right: 1px;
 }
 
 .date-time ul li span{
     display: block;
     text-align: center;
-    padding-left: 1px;
-    padding-right: 1px;
+    padding-left: 2px;
+    padding-right: 2px;
 }
 
 .date-time ul li{
     height: 15px;
+    border-bottom: 1px solid white;
 }
 
 .date:hover{
     cursor: pointer;
 }
 
-.date-hover{
-    background-color: #ff9999;
-    color: white;
-}
 
 @media screen and (min-width: 651px){
     .date-num{
-        font-size: 16px;
-        top: 20px;
-        width: 30px;
-        text-align: right;
+        font-size: 15px;
+        top: 4px;
+        width: 60px;
+        text-align: center;
     }
 }
 
@@ -166,9 +165,9 @@ html,body{
 
     .date-num{
         font-size: 16px;
-        top: 20px;
-        width: 30px;
-        text-align: right;
+        top: 5px;
+        width: 52px;
+        text-align: center;
     }
 
     .date-time ul li{

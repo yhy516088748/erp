@@ -68,7 +68,7 @@
 }
 
 .bgcolor-gray-heavy{
-    background-color: gray;
+    background-color: #c9c9c9;
 }
 
 .bdcolor-gray{
@@ -81,7 +81,7 @@
 }
 
 .btn.bgcolor-gray:hover{
-    background-color: gray;
+    background-color: #c9c9c9;
     cursor: pointer;
 }
 
@@ -115,28 +115,62 @@
 
 /* 红色 */
 .color-red{
-    color:#ff9999;
+    color: #ff6c60;
 }
 
 .bgcolor-red {
-    background-color: #ff9999;
+    background-color: #ff6c60;
     color: white;
 }
 
 .bgcolor-red-heavy {
-    background-color: #ef8a8a;
+    background-color: #f06e62;
 }
 
 .bdcolor-red{
-    border: 1px solid #ff9999;
+    border: 1px solid #ff6c60;
 }
 
 .bdcolor-bottom-red{
     display: block;
-    border-bottom: 2px solid #ff9999;
+    border-bottom: 2px solid #ff6c60;
 }
 
 .btn.bgcolor-red:hover{
+    background-color: #f06e62;
+    cursor: pointer;
+}
+
+.btn.bgcolor-red-heavy:hover{
+    background-color: #e17164;
+    cursor: pointer;
+}
+
+
+/* 淡红色 */
+.color-dred{
+    color:#ff9999;
+}
+
+.bgcolor-dred {
+    background-color: #ff9999;
+    color: white;
+}
+
+.bgcolor-dred-heavy {
+    background-color: #ef8a8a;
+}
+
+.bdcolor-dred{
+    border: 1px solid #ff9999;
+}
+
+.bdcolor-bottom-dred{
+    display: block;
+    border-bottom: 2px solid #ff9999;
+}
+
+.btn.bgcolor-dred:hover{
     background-color: #ef8a8a;
     cursor: pointer;
 }
@@ -171,28 +205,33 @@
 
 /* 绿色 */
 .color-green{
-    color:#84e084;
+    color:#36b449;
 }
 
 .bgcolor-green {
-    background-color: #84e084;
+    background-color: #36b449;
     color: white;
 }
 
 .bgcolor-green-heavy {
-    background-color: #76d576;
+    background-color: #35a547;
 }
 
 .bdcolor-green {
-    border: 1px solid lightgreen;
+    border: 1px solid #36b449;
 }
 
 .bdcolor-bottom-green{
     display: block;
-    border-bottom: 2px solid lightgreen;
+    border-bottom: 2px solid #36b449;
 }
 
 .btn.bgcolor-green:hover{
-    background-color: #76d576;
+    background-color: #35a547;
+    cursor: pointer;
+}
+
+.btn.bgcolor-green-heavy:hover{
+    background-color: #34a046;
     cursor: pointer;
 }

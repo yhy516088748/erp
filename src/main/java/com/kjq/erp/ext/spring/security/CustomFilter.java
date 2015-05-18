@@ -17,7 +17,7 @@ import org.springframework.security.web.access.intercept.FilterInvocationSecurit
 
 /**
  * 
- * TODO 启用资源(如url)过滤
+ * 启用资源(如url)过滤
  * 
  * 自定义filter interceptor
  * <custom-filter ref="customFilter" before="FILTER_SECURITY_INTERCEPTOR" />

@@ -15,7 +15,7 @@ import com.kjq.erp.util.FileUtils;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.Preparable;
 
-public class ImportAction extends ActionSupport implements Preparable {
+public class ImportAction extends ActionSupport  {
 
 	private transient File importFile;
 	private transient String importFileFileName;
@@ -80,11 +80,6 @@ public class ImportAction extends ActionSupport implements Preparable {
 		}
 
 		return SUCCESS;
-	}
-
-	public void prepare() throws Exception {
-		// TODO Auto-generated method stub
-
 	}
 
 	public File getImportFile() {

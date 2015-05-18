@@ -69,34 +69,31 @@ NavBar.prototype = {
         });
         return navBar;
     },
-    /* 暂定 数据对象为 array */
-    /* 设置数据后对菜单进行渲染 */
-    covertData: function (dataObj) {
-        /* 进来的 dataObj 为 json 对象*/
-        /* dataObj.的数据格式 */
-        $.each(dataObj.child,function(k,v){
-            for (var i in v){
-                (function(i){
-                    dataObj.child[k][i].event = function(){
-                        $("#content-container").empty();
-                        new window[v[i].module]($("#content-container"));
-                    }
-                }(i));
-            }
-        });
-        return dataObj;
-    },
     setData: function (dataObj) {
         this.rootUl.empty();
-        var dataObj = this.covertData(dataObj);
         var root = dataObj.root;
         var child = dataObj.child;
         var that = this;
          var rootLiArray = new Array();
+        function findChildObj(child,code){
+            var obj;
+            for (var i = 0 ; i < child.length;i ++ ){
+                var cObj = child[i];
+                $.each(cObj,function(k,v){
+                    if (k == code){
+                        obj = v;
+                    }
+                })
+                if (obj){
+                    return obj;
+                }
+            }
+            return obj;
+        }
          $.each(root, function (i, v) {
              var icon = v.icon;
              var title = v.title;
-             var childObj = child[v.code];
+             var childObj = findChildObj(child,v.code);
              var rootLi = that.createRootLi(icon, title, childObj).appendTo(that.rootUl);
              rootLiArray.push(rootLi);
          });
@@ -163,7 +160,10 @@ NavBar.prototype = {
         var that = this;
         $.each(childData, function (i, v) {
             var title = v.title;
-            var event = v.event;
+            var event = function(){
+                $("#content-container").empty();
+                new window[v.code]($("#content-container"));
+            };
             var li = that.createChildLi(eventLi, title, event);
             li.appendTo(ul);
         });

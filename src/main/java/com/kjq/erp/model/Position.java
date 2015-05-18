@@ -54,4 +54,5 @@ public class Position extends UUIDEntity implements Serializable {
 		this.users = users;
 	}
 	
+	
 }
