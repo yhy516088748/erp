@@ -8,7 +8,7 @@ import javax.persistence.MappedSuperclass;
 import org.hibernate.annotations.GenericGenerator;
 /**
  * UUID实体父类
- * @author York
+ * @author York 
  *
  */
 @MappedSuperclass
