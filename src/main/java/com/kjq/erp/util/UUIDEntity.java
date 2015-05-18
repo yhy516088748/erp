@@ -10,7 +10,7 @@ import org.hibernate.annotations.GenericGenerator;
  * UUID实体父类
  * @author York 
  *
- */
+ */  
 @MappedSuperclass
 public abstract class UUIDEntity {
 	private String id;
