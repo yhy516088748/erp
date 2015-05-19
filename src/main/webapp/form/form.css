@@ -6,6 +6,10 @@
     margin-right: 3px;
 }
 
+.btn [class*="icon"]{
+    margin-right: 4px;
+    margin-left: 4px;
+}
 .btn,.text{
     font-size: 16px;
     margin-top: 5px;

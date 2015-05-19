@@ -21,7 +21,7 @@ public class SigninDao extends GenericDaoHibernate<Signin, String> {
 		return detachedCriteria;
 	}
 
-	public List<Signin> getSigninByDayByUser(Date date,String userID) {
+	public List<Signin> getSigninByDayByUser(Date date, String userID) {
 		Date headerDate = null;
 		Date footerDate = null;
 		Calendar time = Calendar.getInstance();
@@ -30,19 +30,20 @@ public class SigninDao extends GenericDaoHibernate<Signin, String> {
 		time.set(Calendar.MINUTE, 0);
 		time.set(Calendar.SECOND, 0);
 		headerDate = time.getTime();
-		
+
 		time.setTime(date);
 		time.set(Calendar.HOUR_OF_DAY, 23);
 		time.set(Calendar.MINUTE, 59);
 		time.set(Calendar.SECOND, 59);
 		footerDate = time.getTime();
-		
+
 		String hql = "select signin from Signin signin where signinTime >= ? and signinTime <= ? and user_id = ? order by signinTime  ";
-		List<Signin> list = getHibernateTemplate().find(hql,new Object[]{headerDate,footerDate,userID});
+		List<Signin> list = getHibernateTemplate().find(hql,
+				new Object[]{headerDate, footerDate, userID});
 		return list;
 	}
-	
-	public List<Signin> getSigninByMonthByUser(Date date,String userID) {
+
+	public List<Signin> getSigninByMonthByUser(Date date, String userID) {
 		Date headerDate = null;
 		Date footerDate = null;
 		Calendar time = Calendar.getInstance();
@@ -51,25 +52,26 @@ public class SigninDao extends GenericDaoHibernate<Signin, String> {
 		time.set(Calendar.HOUR_OF_DAY, 0);
 		time.set(Calendar.MINUTE, 0);
 		time.set(Calendar.SECOND, 0);
-		//日期所在月第一天
+		// 日期所在月第一天
 		headerDate = time.getTime();
-		
+
 		time.setTime(date);
-		time.add(Calendar.MONTH, 1);    //加一个月  获取下个月
-		time.set(Calendar.DATE, 1);        //设置为下个月第一天
-		time.add(Calendar.DATE, -1);        //下个月减一天 获取该月最后一天
+		time.add(Calendar.MONTH, 1); // 加一个月 获取下个月
+		time.set(Calendar.DATE, 1); // 设置为下个月第一天
+		time.add(Calendar.DATE, -1); // 下个月减一天 获取该月最后一天
 		time.set(Calendar.HOUR_OF_DAY, 23);
 		time.set(Calendar.MINUTE, 59);
 		time.set(Calendar.SECOND, 59);
-		//日期所在月 最后一天
+		// 日期所在月 最后一天
 		footerDate = time.getTime();
-		
+
 		String hql = "select signin from Signin signin where signinTime >= ? and signinTime <= ? and user_id = ? order by signinType,signinTime ";
-		List<Signin> list = getHibernateTemplate().find(hql,new Object[]{headerDate,footerDate,userID});
+		List<Signin> list = getHibernateTemplate().find(hql,
+				new Object[]{headerDate, footerDate, userID});
 		return list;
 	}
-	
-	public Signin findByTypeUser(String signinType,String userID) {
+
+	public Signin findByTypeUser(String signinType, String userID) {
 		Date date = new Date();
 		Date headerDate = null;
 		Date footerDate = null;
@@ -79,19 +81,26 @@ public class SigninDao extends GenericDaoHibernate<Signin, String> {
 		time.set(Calendar.MINUTE, 0);
 		time.set(Calendar.SECOND, 0);
 		headerDate = time.getTime();
-		
+
 		time.setTime(date);
 		time.set(Calendar.HOUR_OF_DAY, 23);
 		time.set(Calendar.MINUTE, 59);
 		time.set(Calendar.SECOND, 59);
 		footerDate = time.getTime();
-		
+
 		String hql = "select signin from Signin signin where signinTime >= ? and signinTime <= ? and signinType = ? and user_id = ? order by signinType,signinTime ";
-		List<Signin> list = getHibernateTemplate().find(hql,new Object[]{headerDate,footerDate,signinType,userID});
-		if (list.size() == 0){
+		List<Signin> list = getHibernateTemplate().find(hql,
+				new Object[]{headerDate, footerDate, signinType, userID});
+		if (list.size() == 0) {
 			return null;
 		}
 		return list.get(0);
+	}
+
+	public List<Signin> countLateSinginBymonth() {
+		String hql = "select signin from Signin signin where signinTime >= '2015-04-30' and signinTime <= '2015-05-31' order by signinType,signinTime ";
+		List<Signin> list = getHibernateTemplate().find(hql, new Object[]{});
+		return list;
 	}
 
 }

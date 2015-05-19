@@ -142,6 +142,27 @@ public class SigninAction extends ActionSupport implements Preparable {
 		}
 	}
 
+	@Action(value = "countSingin")
+	public void countSingin() {
+		// JSONArray lateList = new JSONArray();// 迟到
+		// JSONArray earlyList = new JSONArray(); // 早退
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		
+		// List lateList = signinDao.countLateSinginByDay();
+		List<Signin> lateList = signinDao.countLateSinginBymonth();
+		for(Signin signin:lateList){
+			System.out.println(signin.getId());
+			System.out.println(sdf.format(signin.getSigninTime()));
+			System.out.println(signin.getSigninType());
+			System.out.println(signin.getRemark());
+			System.out.println(signin.getPublicIp());
+			System.out.println(signin.getLocalIp());
+			System.out.println(signin.getUser().getName());
+		}
+
+	}
+
 	@Action(value = "getLocalMacAddress")
 	public void getLocalMacAddress() throws IOException {
 		JSONObject json = new JSONObject();

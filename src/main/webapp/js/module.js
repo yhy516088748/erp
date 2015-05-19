@@ -135,6 +135,11 @@ UserInfo.prototype = {
         $("<img />").attr("src","img/profile-img.png").appendTo($imgLi);
         $("<a />").attr("href","#").addClass("profile-edit").text("Edit").appendTo($imgLi);
 
+        var $editLi = $("<li />").attr("style","float:right").appendTo($imgUl);
+
+        var $a = $("<a><i class='icon-pencil'></i>Edit</a>").addClass("btn bgcolor-blue").appendTo($editLi);
+
+
         var $cdiv = $("<div />").addClass("row-fluid span9").appendTo($div);
         /* 个人信息 */
         var $tab = new Ui_Tab($cdiv);

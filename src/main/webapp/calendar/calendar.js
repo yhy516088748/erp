@@ -177,7 +177,7 @@ Calendar.prototype = {
             var str = util.addZero(t.h,2) + ":" + util.addZero(t.m,2) + ":" + util.addZero(t.s,2);
             var res = util.postJson("erp/addSigninDay.do",{signinType : "上班"});
             if (!res){
-                util.errMsg("签退失败",that.msgDelay);
+                util.errMsg("签到失败",that.msgDelay);
                 return
             }
             if (!that.nowDay){

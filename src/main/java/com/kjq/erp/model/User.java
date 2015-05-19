@@ -38,7 +38,7 @@ public class User extends UUIDEntity implements Serializable {
 	private String loginName;// 登陆账号
 	private String password;// 登陆密码
 	private String iconUrl;
-	
+
 	private String name;// 员工编号
 	private String idNumber;// 员工姓名
 	private String gender;// 性别
@@ -49,13 +49,13 @@ public class User extends UUIDEntity implements Serializable {
 	private String zipCode;// 邮编
 	private String nativePlace;// 籍贯
 
-	private String bankNumber;//银行账号
-	private String bankName;//开户行名称
+	private String bankNumber;// 银行账号
+	private String bankName;// 开户行名称
 	private String gjjAccount;// 公积金账号
 	private String sbAccount;// 社保账号
 	private String workYear;// 参加工作年
 
-	private Boolean isMarry;// 是否已婚(1 是  0 否)
+	private Boolean isMarry;// 是否已婚(1 是 0 否)
 	private Boolean isInsurance;// 是否保险
 	private Boolean isPOInsurance;// 是否配偶保险
 	private Boolean isChild;// 是否子女
@@ -71,15 +71,14 @@ public class User extends UUIDEntity implements Serializable {
 	private String remark;// 备注
 	private Date createTime;
 
-	private Set<Role> roles;//角色
+	private Set<Role> roles;// 角色
 	private Set<Department> departments;// 部门
-	private Set<Position> positions;//职务
+	private Set<Position> positions;// 职务
 
 	private boolean enabled = true;
 	private boolean locked;
 	private Date expiryDate;
 	private Date passwordExpiryDate;
-
 
 	@Column(name = "loginName", length = 50)
 	public String getLoginName() {
@@ -105,7 +104,6 @@ public class User extends UUIDEntity implements Serializable {
 		this.password = password;
 	}
 
-
 	@ManyToMany
 	@JoinTable(name = "tb_user_department", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = @JoinColumn(name = "department_id"))
 	@JSON(serialize = false)
@@ -115,7 +113,7 @@ public class User extends UUIDEntity implements Serializable {
 	public void setDepartments(Set<Department> departments) {
 		this.departments = departments;
 	}
-	
+
 	@ManyToMany
 	@JoinTable(name = "tb_user_role", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = @JoinColumn(name = "role_id"))
 	@JSON(serialize = false)
@@ -125,7 +123,7 @@ public class User extends UUIDEntity implements Serializable {
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
 	}
-	
+
 	@ManyToMany
 	@JoinTable(name = "tb_user_position", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = @JoinColumn(name = "position_id"))
 	@JSON(serialize = false)
@@ -135,8 +133,8 @@ public class User extends UUIDEntity implements Serializable {
 	public void setPositions(Set<Position> positions) {
 		this.positions = positions;
 	}
-	
-	@Column(columnDefinition="INT default 1")
+
+	@Column(columnDefinition = "INT default 1")
 	public boolean isEnabled() {
 		return enabled;
 	}
@@ -144,7 +142,7 @@ public class User extends UUIDEntity implements Serializable {
 		this.enabled = enabled;
 	}
 
-	@Column(columnDefinition="INT default 0")
+	@Column(columnDefinition = "INT default 0")
 	public boolean isLocked() {
 		return locked;
 	}
@@ -179,7 +177,7 @@ public class User extends UUIDEntity implements Serializable {
 		return (getExpiryDate() == null)
 				|| (getPasswordExpiryDate().compareTo(new Date()) > 0);
 	}
-	
+
 	@Column(name = "email", length = 50)
 	public String getEmail() {
 		return email;
@@ -220,7 +218,7 @@ public class User extends UUIDEntity implements Serializable {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	
+
 	@Column(name = "idNumber", length = 20)
 	public String getIdNumber() {
 		return idNumber;
@@ -245,14 +243,14 @@ public class User extends UUIDEntity implements Serializable {
 		this.nativePlace = nativePlace;
 	}
 
-	@Column(name="bankNumber",length=100)
+	@Column(name = "bankNumber", length = 100)
 	public String getBankNumber() {
 		return bankNumber;
 	}
 	public void setBankNumber(String bankNumber) {
 		this.bankNumber = bankNumber;
 	}
-	@Column(name="bankName",length=50)
+	@Column(name = "bankName", length = 50)
 	public String getBankName() {
 		return bankName;
 	}
@@ -339,42 +337,37 @@ public class User extends UUIDEntity implements Serializable {
 	public void setWorkYear(String workYear) {
 		this.workYear = workYear;
 	}
-	@Column(columnDefinition="INT default 0")
 	public Boolean getIsMarry() {
 		return isMarry;
 	}
 	public void setIsMarry(Boolean isMarry) {
 		this.isMarry = isMarry;
 	}
-	@Column(columnDefinition="INT default 0")
 	public Boolean getIsInsurance() {
 		return isInsurance;
 	}
 	public void setIsInsurance(Boolean isInsurance) {
 		this.isInsurance = isInsurance;
 	}
-	@Column(columnDefinition="INT default 0")
 	public Boolean getIsPOInsurance() {
 		return isPOInsurance;
 	}
 	public void setIsPOInsurance(Boolean isPOInsurance) {
 		this.isPOInsurance = isPOInsurance;
 	}
-	@Column(columnDefinition="INT default 0")
 	public Boolean getIsChild() {
 		return isChild;
 	}
 	public void setIsChild(Boolean isChild) {
 		this.isChild = isChild;
 	}
-	@Column(columnDefinition="INT default 0")
 	public Boolean getIsChildInsurance() {
 		return isChildInsurance;
 	}
 	public void setIsChildInsurance(Boolean isChildInsurance) {
 		this.isChildInsurance = isChildInsurance;
 	}
-	@Column(name="iconUrl",length=200)
+	@Column(name = "iconUrl", length = 200)
 	public String getIconUrl() {
 		return iconUrl;
 	}
