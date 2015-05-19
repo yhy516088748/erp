@@ -120,12 +120,6 @@ public class UserAction extends ActionSupport {
 		user.setLoginName((String) filter.get("loginName"));
 		user.setName((String) filter.get("name"));
 		user.setPassword((String) filter.get("password"));
-		user.setLoginName((String) filter.get("password"));
-		user.setName((String) filter.get("password"));
-		user.setPassword((String) filter.get("password"));
-//		user.setDepartments((String) filter.get("password"));
-//		user.setRoles((String) filter.get("password"));
-//		user.setPositions((String) filter.get("password"));
 		user.setEnabled(true);
 		user.setLocked(false);
 		user.setExpiryDate(null);
@@ -176,6 +170,10 @@ public class UserAction extends ActionSupport {
 		System.out.println(filter.get("positionids"));
 		System.out.println("--------------role--------------");
 		System.out.println(filter.get("roleids"));
+		
+		System.out.println(user.getName());
+		System.out.println(user.getLoginName());
+		System.out.println(user.getPassword());
 
 		userDao.save(user);
 

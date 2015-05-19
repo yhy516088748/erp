@@ -48,7 +48,7 @@
 				hibernate.use_sql_comments=false
 				hibernate.format_sql=false
 				<!-- 危险操作 -->
-				hibernate.hbm2ddl.auto=update
+				<!-- hibernate.hbm2ddl.auto=update -->
 			</value>
 			<!-- Turn batching off for better error messages under PostgreSQL -->
 			<!-- hibernate.jdbc.batch_size=0 -->

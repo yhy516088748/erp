@@ -27,7 +27,6 @@
 			/> -->
 		<intercept-url pattern="/login.do*" access="IS_AUTHENTICATED_ANONYMOUSLY" />
 		<intercept-url pattern="/**" access="ROLE_USER" />
-		<!-- <intercept-url pattern="/**" access="ROLE_admin" /> -->
 
 
 		<form-login authentication-failure-handler-ref="loginFailureHandler"

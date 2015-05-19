@@ -11,6 +11,7 @@ import com.kjq.erp.model.Role;
  *
  */
 public class RoleAdapter implements GrantedAuthority, Serializable {
+	private static final long serialVersionUID = -479148446167046336L;
 	private static final String rolePrefix = "";
 	private final Role role;
 

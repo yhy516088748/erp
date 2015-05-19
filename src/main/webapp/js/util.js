@@ -17,9 +17,12 @@ var util = {	// actionHost : "http://10.10.10.132:8080/",
 		}
         var index = url.indexOf("addSigninDay");
         if (index > 0){
+            /*
             var res = util.postJson("erp/getLocalMacAddress.do");
+            */
             getIp();
-            data.macAddress = res.macAddress;
+
+            //data.macAddress = res.macAddress;
             data.publicip = $("#public-ip").text();
             data.localip = $("#local-ip").text();
         }
@@ -89,7 +92,10 @@ var util = {	// actionHost : "http://10.10.10.132:8080/",
 			return true;
 		}
 		if (res.Status == "ERROR") {
-			util.errMsg(res.Reason, 1500);
+            if (res.Reason){
+                util.errMsg(res.Reason, 1500);
+            }
+			return false;
 		}
 		return false;
 	},

@@ -23,17 +23,20 @@ public class UdpGetClientMacAddr {
 	}
 
 	protected final DatagramPacket send(final byte[] bytes) throws IOException {
+		System.out.println("send");
 		DatagramPacket dp = new DatagramPacket(bytes,bytes.length,InetAddress.getByName(sRemoteAddr),iRemotePort);
 		ds.send(dp);
 		return dp;
 	}
 
 	protected final DatagramPacket receive() throws Exception {
+		System.out.println("receive");
 		DatagramPacket dp = new DatagramPacket(buffer,buffer.length);
 		ds.receive(dp);
 		return dp;
 	}
 	protected byte[] GetQueryCmd() throws Exception {
+		System.out.println("getquerycmd");
 		byte[] t_ns = new byte[50];
 		t_ns[0] = 0x00;
 		t_ns[1] = 0x00;
@@ -62,6 +65,7 @@ public class UdpGetClientMacAddr {
 		return t_ns;
 	}
 	protected final String GetMacAddr(byte[] brevdata) throws Exception {
+		System.out.println("getmacaddr");
 		// 获取计算机名
 		int i = brevdata[56] * 18 + 56;
 		String sAddr="";
@@ -82,6 +86,7 @@ public class UdpGetClientMacAddr {
 	}
 
 	public final void close() {
+		System.out.println("close");
 		try
 		{
 			ds.close();

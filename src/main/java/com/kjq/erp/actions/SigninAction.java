@@ -118,20 +118,28 @@ public class SigninAction extends ActionSupport implements Preparable {
 		Signin signin = new Signin();
 		signin.setSigninType(signinType);
 
-		signin.setRemark(remark);
-		signin.setPublicIp(publicIp);
-		signin.setLocalAddress(localAddress);
-		signin.setMacAddress(macAddress);
-		signin.setLocalAddress(localAddress);
+		Signin checkSignin = signinDao.findByTypeUser(signinType, ua.getUser()
+				.getId());
+		if (checkSignin != null) {
+			json.put("Status", "ERROR");
+			Response response = new Response();
+			response.doResponse(json.toString());
+		} else {
+			signin.setRemark(remark);
+			signin.setPublicIp(publicIp);
+			signin.setLocalIp(localIp);
+			// signin.setMacAddress(macAddress);
+			signin.setLocalAddress(localAddress);
 
-		signin.setSigninTime(time);
-		signin.setUser(ua.getUser());
+			signin.setSigninTime(time);
+			signin.setUser(ua.getUser());
 
-		signinDao.save(signin);
+			signinDao.save(signin);
 
-		json.put("Status", "OK");
-		Response response = new Response();
-		response.doResponse(json.toString());
+			json.put("Status", "OK");
+			Response response = new Response();
+			response.doResponse(json.toString());
+		}
 	}
 
 	@Action(value = "getLocalMacAddress")
