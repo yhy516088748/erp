@@ -56,8 +56,7 @@ public class SigninAction extends ActionSupport implements Preparable {
 	public void getSigninDay() throws IOException {
 		JSONObject json = new JSONObject();
 
-		UserAdapter ua = (UserAdapter) SecurityContextHolder.getContext()
-				.getAuthentication().getPrincipal();
+		UserAdapter ua = (UserAdapter) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		User user = ua.getUser();
 		// User user = userDao.get("8a8a8a044d4b26b9014d4b3464800000");
 		Date today = new Date();
@@ -74,13 +73,11 @@ public class SigninAction extends ActionSupport implements Preparable {
 	public void getSigninMonth() throws IOException {
 		JSONObject json = new JSONObject();
 
-		UserAdapter ua = (UserAdapter) SecurityContextHolder.getContext()
-				.getAuthentication().getPrincipal();
+		UserAdapter ua = (UserAdapter) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		User user = ua.getUser();
 		// User user = userDao.get("8a8a8a044d4b26b9014d4b3464800000");
 		Date today = new Date();
-		List<Signin> signinList = signinDao.getSigninByMonthByUser(today,
-				user.getId());
+		List<Signin> signinList = signinDao.getSigninByMonthByUser(today, user.getId());
 
 		JSONArray list = new JSONArray();
 		for (Signin signin : signinList) {
@@ -112,14 +109,12 @@ public class SigninAction extends ActionSupport implements Preparable {
 		JSONObject json = new JSONObject();
 
 		Date time = new Date();
-		UserAdapter ua = (UserAdapter) SecurityContextHolder.getContext()
-				.getAuthentication().getPrincipal();
+		UserAdapter ua = (UserAdapter) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
 		Signin signin = new Signin();
 		signin.setSigninType(signinType);
 
-		Signin checkSignin = signinDao.findByTypeUser(signinType, ua.getUser()
-				.getId());
+		Signin checkSignin = signinDao.findByTypeUser(signinType, ua.getUser().getId());
 		if (checkSignin != null) {
 			json.put("Status", "ERROR");
 			Response response = new Response();
@@ -146,12 +141,13 @@ public class SigninAction extends ActionSupport implements Preparable {
 	public void countSingin() {
 		// JSONArray lateList = new JSONArray();// 迟到
 		// JSONArray earlyList = new JSONArray(); // 早退
+		UserAdapter ua = (UserAdapter) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		
-		// List lateList = signinDao.countLateSinginByDay();
-		List<Signin> lateList = signinDao.countLateSinginBymonth();
-		for(Signin signin:lateList){
+
+		List<Signin> lateList = signinDao.countLateSinginByDay(new Date(), ua.getUser().getId());
+		// List<Signin> lateList = signinDao.countLateSinginBymonth();
+		for (Signin signin : lateList) {
 			System.out.println(signin.getId());
 			System.out.println(sdf.format(signin.getSigninTime()));
 			System.out.println(signin.getSigninType());
@@ -161,6 +157,18 @@ public class SigninAction extends ActionSupport implements Preparable {
 			System.out.println(signin.getUser().getName());
 		}
 
+	}
+	private static Boolean checkIsLate(Date date,String userid){
+		
+		return false;
+	}
+	private static Boolean checkIsEarly(Date date,String userid){
+		
+		return false;
+	}
+	private static int countWorkOverTime(Date date,String userid){
+		
+		return 1;
 	}
 
 	@Action(value = "getLocalMacAddress")

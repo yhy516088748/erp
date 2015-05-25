@@ -1,3 +1,5 @@
+<%@ page contentType="text/html; charset=utf-8"%> <%@ taglib prefix="s"
+uri="/struts-tags"%>
 <!DOCTYPE html>
 <html>
 <head lang="en">
@@ -5,6 +7,7 @@
     <title>Company Management</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="http://api.map.baidu.com/components?ak=DFYEfzahpt0Y4vora2qLVw6L&v=1.0"></script>
     <!--[if lte IE 8]>
     <script type="text/javascript" src="js/html5.js"></script>
     <script type="text/javascript" src="js/respond.min.js"></script>
@@ -67,10 +70,35 @@
             <a id="public-ip"></a>
             <a id="local-ip-title"></a>
             <a id="local-ip"></a>
+            <a id="address-title"></a>
+            <a id="address"></a>
             <script>
                 getIp();
             </script>
+            <!—定位组件-->
+            <lbs-geo id="geo" enable-modified="false" style="display: none"></lbs-geo>
+            <script>
+                // 先获取元素
+                var lbsGeo = document.getElementById('geo');
+                //监听定位失败事件 geofail
+                lbsGeo.addEventListener("geofail",function(evt){
+                    alert("fail");
+                });
+                //监听定位成功事件 geosuccess
+                lbsGeo.addEventListener("geosuccess",function(evt){
+                    console.log(evt.detail);
+                    var address = evt.detail.address;
+                    var coords = evt.detail.coords;
+                    var x = coords.lng;
+                    var y = coords.lat;
+                    $("#address-title").text("地址:");
+                    $("#address").text(address);
+                });
+            </script>
         </div>
+    </div>
+    <div class="scroll bgcolor-blue" id="scroll" style="display:none;">
+        <i class="icon-arrow-up"></i>
     </div>
 </div>
 <script>

@@ -40,8 +40,6 @@ $(function() {
 	/* 用户信息 */
 	userObj = {
 
-		userid : userid,
-
 		// 正规上班时间
 		specifiedTime : [ userInfoObj.workStartTime, userInfoObj.workEndTime ],
 
@@ -55,7 +53,7 @@ $(function() {
 		// 菜单的必要参数 对应菜单标签
 		navbar : navBarObj,
 
-		defaultModule : "PunchClock"
+		defaultModule : "UserManager"
 	}
 
 	// 放置各种 全局物品
@@ -72,6 +70,17 @@ $(function() {
 	timer.setTime(userObj.timer.h, userObj.timer.m, userObj.timer.s);
 	timer.start();
 
+    /* 回到顶部 */
+    function showScroll(){
+        $(window).scroll( function() {
+            var scrollValue=$(window).scrollTop();
+            scrollValue > 100 ? $('div[class*=scroll]').fadeIn():$('div[class*=scroll]').fadeOut();
+        } );
+        $('#scroll').click(function(){
+            $("html,body").animate({scrollTop:0},200);
+        });
+    }
+    showScroll();
 	/* 菜单 */
 
 	var navBar = new NavBar($("#content-nav"));
@@ -84,6 +93,6 @@ $(function() {
 	// message.start();
 	/* 默认模块 */
 	new window[userObj.defaultModule]($("#content-container"));
-	// var userInfo = new UserInfo($("#content-container"));
-	// userInfo.setData();
+	//var userInfo = new UserInfo($("#content-container"));
+	//userInfo.setData();
 })

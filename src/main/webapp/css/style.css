@@ -280,9 +280,9 @@ ul.unstyle{
 .user-info-title .page-title {
     color: #666;
     display: block;
-    font-family: "HelveticaNeue", "Helvetica Neue", Helvetica, Arial;
+    font-family:Helvetica, 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', Arial, sans-serif;
     font-size: 30px;
-    font-weight: 300;
+    font-weight: normal;
     letter-spacing: -1px;
     margin: 8px 0 15px;
     padding: 0;
@@ -341,4 +341,21 @@ ul.unstyle{
 .profile p {
     color: #636363;
     font-size: 13px;
+}
+
+.scroll{
+    width:40px;
+    height:40px;
+    border-radius: 5px;
+    line-height:40px;
+    text-align:center;
+    position:fixed;
+    right:30px;
+    bottom:40px;
+    cursor:pointer;
+    font-size:30px;
+}
+.scroll i{
+    display: block;
+    margin-top: 5px;
 }

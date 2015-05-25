@@ -27,9 +27,9 @@ PunchClock.prototype = {
 
         var res = util.getJson("erp/getSigninMonth.do");
         var obj;
-        if (res){
+        if (res) {
             obj = res.List;
-        }else{
+        } else {
             return;
         }
         var calendar = new Calendar(childDiv);
@@ -89,7 +89,7 @@ UserManager.prototype = {
                 ContractStartDate: "合同起始日期",
                 ContractEndDate: "合同失效日期",
                 remark: "备注",
-                userid : ""
+                userid: ""
             }
         );
         var res = util.getJson("erp/getUserList.do");
@@ -127,20 +127,19 @@ UserInfo.prototype = {
 
         this.$tab = $tab;
     },
-    createOne : function(titleData,data,allData){
+    createOne: function (titleData, data, allData) {
         var $div = $("<div />").addClass("row-fluid");
         /* 图片 信息 */
         var $imgUl = $("<ul />").addClass("profile-classic unstyle span3").appendTo($div);
         var $imgLi = $("<li />").appendTo($imgUl);
-        $("<img />").attr("src","img/profile-img.png").appendTo($imgLi);
-        $("<a />").attr("href","#").addClass("profile-edit").text("Edit").appendTo($imgLi);
-
-        var $editLi = $("<li />").attr("style","float:right").appendTo($imgUl);
-
-        var $a = $("<a><i class='icon-pencil'></i>Edit</a>").addClass("btn bgcolor-blue").appendTo($editLi);
-
+        $("<img />").attr("src", "img/profile-img.png").appendTo($imgLi);
+        $("<a />").attr("href", "#").addClass("profile-edit").text("Edit").appendTo($imgLi);
 
         var $cdiv = $("<div />").addClass("row-fluid span9").appendTo($div);
+
+        this.changeDataObj = {};
+        this.changeDataObj.userid = allData.userid;
+
         /* 个人信息 */
         var $tab = new Ui_Tab($cdiv);
 
@@ -152,78 +151,113 @@ UserInfo.prototype = {
         ));
 
         $tab.setContent(new Array(
-            this.createTitleSpace(titleData,data),
+            this.createTitleSpace(titleData, data),
             this.getOneTwoSpace(allData),
             this.getTwoSpace(allData),
             this.getThreeSpace(allData)
-        ))
+        ));
+
+        var $editLi = $("<div />").appendTo($cdiv);
+        var $a = $("<a><i class='icon-pencil'></i>Save Changes</a>").addClass("btn bgcolor-green").appendTo($editLi);
+
+        var that = this;
+        $a.click(function () {
+            var res = util.postJson("addUser.do", that.getChangeDatas());
+            $("#scroll").click();
+        });
+
         return $div;
     },
-    createTitleSpace : function(titleData,data){
+    getChangeDatas: function () {
+        var newObj = {};
+        $.each(this.changeDataObj, function (k, o) {
+            if (o instanceof  jQuery) {
+                var value = o.val();
+                if (value == "Yes") {
+                    value = true;
+                } else if (value == "No") {
+                    value = false;
+                }
+                newObj[k] = value;
+            } else {
+                newObj[k] = o;
+            }
+        })
+        return newObj;
+    },
+    createTitleSpace: function (titleData, data) {
         var $userUl = $("<ul />").addClass("profile-classic unstyle");
         this.$titleH3.text(data.name);
         $("<small />").text("information").appendTo(this.$titleH3);
-        $.each(data,function(k,v){
-            $("<li><span>"+ titleData[k] + "</span>" + v + "</li>").appendTo($userUl);
+        var that = this;
+        $.each(data, function (k, v) {
+            var $li = $("<li />").addClass("controls").appendTo($userUl);
+            $("<label>" + titleData[k] + "</label>").appendTo($li);
+            var text = $("<input type='text' />").addClass("text span12").attr("value", v).appendTo($li);
+            //$("<li><span>"+ titleData[k] + "</span>" + v + "</li>").appendTo($userUl);
+            that.changeDataObj[k] = text;
         });
-        return  $userUl;
+        return $userUl;
     },
-    createSpace : function(titleData,data){
+    createSpace: function (titleData, data) {
         var $div = $("<div />").addClass("row-fluid");
         /* 个人信息 */
-        var $userUl = $("<ul />").addClass("profile-classic unstyle span10").appendTo($div);
-        $.each(data,function(k,v){
-            $("<li><span>"+ titleData[k] + "</span>" + v + "</li>").appendTo($userUl);
+        var $userUl = $("<ul />").addClass("profile-classic unstyle span12").appendTo($div);
+        var that = this;
+        $.each(data, function (k, v) {
+            var $li = $("<li />").addClass("controls").appendTo($userUl);
+            $("<label>" + titleData[k] + "</label>").appendTo($li);
+            var text = $("<input type='text' />").addClass("text span12").attr("value", v).appendTo($li);
+            that.changeDataObj[k] = text;
         });
-        return  $div;
+        return $div;
     },
-    createAccountSpace : function(titleData,data){
+    createAccountSpace: function (titleData, data) {
         /* 账户密码 信息 以及邮箱 信息*/
         var $div = $("<div />").addClass("row-fluid");
 
         /* 账户安全信息 */
         var $userUl = $("<ul />").addClass("profile-classic unstyle span12").appendTo($div);
         /* 登陆账户 */
-        $("<li><span>"+ titleData.loginName + "</span>" + data.loginName + "</li>").appendTo($userUl);
+        $("<li><span>" + titleData.loginName + "</span>" + data.loginName + "</li>").appendTo($userUl);
 
         var password = $("<li />").addClass("controls").appendTo($userUl);
-        $("<label>"+ titleData.oldPassword + "</label>").appendTo(password);
+        $("<label>" + titleData.oldPassword + "</label>").appendTo(password);
         var $oldPassword = $("<input type='password' />").addClass("text span12").appendTo(password);
 
         var password = $("<li />").addClass("controls").appendTo($userUl);
-        $("<label>"+ titleData.newPassword + "</label>").appendTo(password);
+        $("<label>" + titleData.newPassword + "</label>").appendTo(password);
         var $newPassword = $("<input type='password' />").addClass("text span12").appendTo(password);
 
         var password = $("<li />").addClass("controls").appendTo($userUl);
-        $("<label>"+ titleData.rePassword + "</label>").appendTo(password);
+        $("<label>" + titleData.rePassword + "</label>").appendTo(password);
         var $rePassword = $("<input type='password' />").addClass("text span12").appendTo(password);
 
         var $controls = $("<li />").addClass("controls").appendTo($userUl);
-        $("<button />").addClass("btn bgcolor-green").text("Save Changes").appendTo($controls);
-        $("<button />").addClass("btn bgcolor-gray").text("Reset").appendTo($controls);
-        return  $div;
+        var $a = $("<a><i class='icon-pencil'></i>Save Changes</a>").addClass("btn bgcolor-green").appendTo($controls);
+        return $div;
     },
-    setData : function(userid){
+    setData: function (userid) {
         var data = {};
-        if (userid){
+        if (userid) {
             data.userid = userid;
         }
-        var res = util.postJson("erp/getUserInfo.do",data);
-        if (!res){
+        var res = util.postJson("erp/getUserInfo.do", data);
+        if (!res) {
             return;
         }
         /*
-        var fileName = $("<input />").attr("type","file").appendTo($imgdiv);
-        fileName.change(function(){
-            util.fileUpload("http://10.10.10.132:8080/erp/getUserInfo.do",fileName[0]);
-        })
-        */
+         var fileName = $("<input />").attr("type","file").appendTo($imgdiv);
+         fileName.change(function(){
+         util.fileUpload("http://10.10.10.132:8080/erp/getUserInfo.do",fileName[0]);
+         })
+         */
         this.$tab.setContent(new Array(
             this.getOneSpace(res.Info),
             this.getFourSpace(res.Info)
         ));
     },
-    getOneSpace : function(data){
+    getOneSpace: function (data) {
         /* 个人信息 */
         var titleData = {
             name: "User Name :",
@@ -234,7 +268,7 @@ UserInfo.prototype = {
             nativePlace: "Native Place :",
             education: "Education :",
             professional: "Professional :",
-            remark : "About :"
+            remark: "About :"
         }
 
         var newData = {
@@ -242,23 +276,23 @@ UserInfo.prototype = {
             idNumber: data.idNumber,
             gender: data.gender,
             birthday: data.birthday,
-            workYear : data.workYear,
+            workYear: data.workYear,
             nativePlace: data.nativePlace,
             education: data.education,
             professional: data.professional,
-            remark : data.remark
+            remark: data.remark
         }
 
-        return this.createOne(titleData,newData,data);
+        return this.createOne(titleData, newData, data);
     },
-    getOneTwoSpace : function(data){
+    getOneTwoSpace: function (data) {
         var titleData = {
             email: "Email :",
             phone: "Telephone :",
             address: "Address :",
             zipCode: "Zip Code :",
-            bankName : "Bank Name :",
-            bankNumber : "Bank Number :",
+            bankName: "Bank Name :",
+            bankNumber: "Bank Number :",
             gjjAccount: "Accumulation Fund :",
             sbAccount: "Social Security Numbers : "
         }
@@ -267,41 +301,41 @@ UserInfo.prototype = {
             phone: data.phone,
             address: data.address,
             zipCode: data.zipCode,
-            bankName : data.bankName,
-            bankNumber : data.bankNumber,
-            gjjAccount : data.gjjAccount,
-            sbAccount : data.sbAccount
+            bankName: data.bankName,
+            bankNumber: data.bankNumber,
+            gjjAccount: data.gjjAccount,
+            sbAccount: data.sbAccount
         }
-        return this.createSpace(titleData,data);
+        return this.createSpace(titleData, data);
     },
-    getTwoSpace : function(data){
+    getTwoSpace: function (data) {
         /* 家庭信息 */
         var titleData = {
             isMarry: "Whether Married :",
             isInsurance: "Whether Insurance :",
             isPOInsurance: "Whether The Spouse Insurance :",
-            isClild: "Whether Children :",
-            isClildInsurance: "Whether The Children Insurance :"
+            isChild: "Whether Children :",
+            isChildInsurance: "Whether The Children Insurance :"
         };
 
-        var getYesOrNo = function(flag){
-            return flag ? "Yes":"No";
+        var getYesOrNo = function (flag) {
+            return flag ? "Yes" : "No";
         }
 
         var data = {
             isMarry: getYesOrNo(data.isMarry),
             isInsurance: getYesOrNo(data.isInsurance),
             isPOInsurance: getYesOrNo(data.isPOInsurance),
-            isClild: getYesOrNo(data.isClild),
-            isClildInsurance: getYesOrNo(data.isClildInsurance)
+            isChild: getYesOrNo(data.isChild),
+            isChildInsurance: getYesOrNo(data.isChildInsurance)
         }
 
-        return this.createSpace(titleData,data);
+        return this.createSpace(titleData, data);
     },
-    getThreeSpace : function(data){
+    getThreeSpace: function (data) {
         var titleData = {
-            department: "Department :",
-            position: "Position :",
+            departments: "Departments :",
+            positions: "Positions :",
             workStartTime: "Work Start Time :",
             workEndTime: "Work End Time : ",
             contractStartDate: "Contract Start Date :",
@@ -309,30 +343,30 @@ UserInfo.prototype = {
         };
 
         var data = {
-            department: data.department,
-            position: data.position,
+            departments: data.departments,
+            positions: data.positions,
             workStartTime: data.workStartTime,
             workEndTime: data.workEndTime,
             contractStartDate: data.contractStartDate,
             contractEndDate: data.contractEndDate
         }
 
-        return this.createSpace(titleData,data);
+        return this.createSpace(titleData, data);
     },
-    getFourSpace : function(data){
+    getFourSpace: function (data) {
         var titleData = {
             loginName: "Login Name :",
             oldPassword: "Pass Word :",
-            newPassword : "New Pass Word :",
-            rePassword : "Re Pass Word :"
+            newPassword: "New Pass Word :",
+            rePassword: "Re Pass Word :"
         }
         var data = {
-            loginName: "yuting",
-            oldPassword : "",
-            newPassword : "",
-            rePassword : ""
+            loginName: data.loginName,
+            oldPassword: "",
+            newPassword: "",
+            rePassword: ""
         }
-        return this.createAccountSpace(titleData,data);
+        return this.createAccountSpace(titleData, data);
     }
 }
 
